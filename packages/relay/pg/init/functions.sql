@@ -135,9 +135,9 @@ RETURNS SETOF public.comment as $$
 BEGIN
   RETURN QUERY
   WITH RECURSIVE T as(
-    select id, user_code, topic_id, parent_id, content, created_at, updated_at, deleted_at, ARRAY[id] AS PATH, read, target_user, mentionCodes from public.comment where parent_id is NULL and topic_id = topicid
+    select id, user_code, target_user, topic_id, parent_id, content, mentionCodes, created_at, updated_at, deleted_at, ARRAY[id] AS PATH, read from public.comment where parent_id is NULL and topic_id = topicid
     UNION ALL
-    select D.id, D.user_code, D.topic_id, D.parent_id, D.content, D.created_at, D.updated_at, D.deleted_at, T.PATH||D.id, D.read, D.target_user, D.mentionCodes from public.comment D join T on D.parent_id = T.id
+    select D.id, D.user_code, D.target_user, D.topic_id, D.parent_id, D.content, D.mentionCodes, D.created_at, D.updated_at, D.deleted_at, T.PATH||D.id, D.read from public.comment D join T on D.parent_id = T.id
   )
   SELECT * FROM T ORDER BY PATH, created_at asc;
 

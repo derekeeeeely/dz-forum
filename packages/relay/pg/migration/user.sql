@@ -1,0 +1,1 @@
+insert into public.user (code, name) values('admin', 'admin');

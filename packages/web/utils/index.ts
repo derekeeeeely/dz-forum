@@ -190,6 +190,8 @@ export const getQueryArgs = (ctx: NextAppContext['ctx']) => {
         sectionId: id,
       }
     }
+
+    console.log(userCode, '----')
     variables = {
       ...defaultArgs,
       userCode,

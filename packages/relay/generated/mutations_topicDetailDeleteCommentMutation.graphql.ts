@@ -9,16 +9,16 @@ export type UpdateCommentInput = {
 export type CommentPatch = {
     readonly id?: number | null;
     readonly userCode?: string | null;
+    readonly targetUser?: string | null;
     readonly topicId?: number | null;
     readonly parentId?: number | null;
     readonly content?: string | null;
+    readonly mentioncodes?: ReadonlyArray<string | null> | null;
     readonly createdAt?: any | null;
     readonly updatedAt?: any | null;
     readonly deletedAt?: any | null;
     readonly path?: ReadonlyArray<number | null> | null;
     readonly read?: boolean | null;
-    readonly targetUser?: string | null;
-    readonly mentioncodes?: ReadonlyArray<string | null> | null;
 };
 export type mutations_topicDetailDeleteCommentMutationVariables = {
     readonly input: UpdateCommentInput;

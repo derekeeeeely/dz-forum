@@ -13,7 +13,9 @@ export type TopicCondition = {
     readonly userCode?: string | null;
     readonly sectionId?: number | null;
     readonly title?: string | null;
+    readonly tags?: ReadonlyArray<string | null> | null;
     readonly content?: string | null;
+    readonly mentioncodes?: ReadonlyArray<string | null> | null;
     readonly likeNum?: any | null;
     readonly commentNum?: any | null;
     readonly type?: number | null;
@@ -21,8 +23,6 @@ export type TopicCondition = {
     readonly createdAt?: any | null;
     readonly updatedAt?: any | null;
     readonly deletedAt?: any | null;
-    readonly tags?: ReadonlyArray<string | null> | null;
-    readonly mentioncodes?: ReadonlyArray<string | null> | null;
 };
 export type MentionCondition = {
     readonly id?: number | null;
@@ -30,25 +30,25 @@ export type MentionCondition = {
     readonly targetUser?: string | null;
     readonly topicId?: number | null;
     readonly parentId?: number | null;
+    readonly commentId?: number | null;
+    readonly read?: boolean | null;
     readonly createdAt?: any | null;
     readonly updatedAt?: any | null;
     readonly deletedAt?: any | null;
-    readonly commentId?: number | null;
-    readonly read?: boolean | null;
 };
 export type CommentCondition = {
     readonly id?: number | null;
     readonly userCode?: string | null;
+    readonly targetUser?: string | null;
     readonly topicId?: number | null;
     readonly parentId?: number | null;
     readonly content?: string | null;
+    readonly mentioncodes?: ReadonlyArray<string | null> | null;
     readonly createdAt?: any | null;
     readonly updatedAt?: any | null;
     readonly deletedAt?: any | null;
     readonly path?: ReadonlyArray<number | null> | null;
     readonly read?: boolean | null;
-    readonly targetUser?: string | null;
-    readonly mentioncodes?: ReadonlyArray<string | null> | null;
 };
 export type LikeCondition = {
     readonly id?: number | null;

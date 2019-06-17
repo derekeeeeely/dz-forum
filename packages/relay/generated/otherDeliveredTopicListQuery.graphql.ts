@@ -7,7 +7,9 @@ export type TopicCondition = {
     readonly userCode?: string | null;
     readonly sectionId?: number | null;
     readonly title?: string | null;
+    readonly tags?: ReadonlyArray<string | null> | null;
     readonly content?: string | null;
+    readonly mentioncodes?: ReadonlyArray<string | null> | null;
     readonly likeNum?: any | null;
     readonly commentNum?: any | null;
     readonly type?: number | null;
@@ -15,8 +17,6 @@ export type TopicCondition = {
     readonly createdAt?: any | null;
     readonly updatedAt?: any | null;
     readonly deletedAt?: any | null;
-    readonly tags?: ReadonlyArray<string | null> | null;
-    readonly mentioncodes?: ReadonlyArray<string | null> | null;
 };
 export type otherDeliveredTopicListQueryVariables = {
     readonly count?: number | null;

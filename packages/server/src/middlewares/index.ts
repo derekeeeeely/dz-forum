@@ -26,7 +26,7 @@ export function mountMiddlewares(app: Application) {
 
   // upload api
   app.use(fileUpload());
-  app.post('/upload', uploadHandler);
+  // app.post('/upload', uploadHandler);
 
   // 登出
   app.get('/logout', (req, res) => {

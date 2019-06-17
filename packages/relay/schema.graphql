@@ -17,6 +17,9 @@ type Comment implements Node {
   """用户code"""
   userCode: String
 
+  """回复的目标用户code"""
+  targetUser: String
+
   """回复的帖子id"""
   topicId: Int!
 
@@ -25,6 +28,9 @@ type Comment implements Node {
 
   """回复内容"""
   content: String
+
+  """@的人"""
+  mentioncodes: [String]
 
   """创建时间"""
   createdAt: Datetime!
@@ -40,8 +46,6 @@ type Comment implements Node {
 
   """是否已读"""
   read: Boolean
-  targetUser: String
-  mentioncodes: [String]
 
   """Reads a single `User` that is related to this `Comment`."""
   userByUserCode: User
@@ -60,6 +64,9 @@ input CommentCondition {
   """Checks for equality with the object’s `userCode` field."""
   userCode: String
 
+  """Checks for equality with the object’s `targetUser` field."""
+  targetUser: String
+
   """Checks for equality with the object’s `topicId` field."""
   topicId: Int
 
@@ -68,6 +75,9 @@ input CommentCondition {
 
   """Checks for equality with the object’s `content` field."""
   content: String
+
+  """Checks for equality with the object’s `mentioncodes` field."""
+  mentioncodes: [String]
 
   """Checks for equality with the object’s `createdAt` field."""
   createdAt: Datetime
@@ -83,12 +93,6 @@ input CommentCondition {
 
   """Checks for equality with the object’s `read` field."""
   read: Boolean
-
-  """Checks for equality with the object’s `targetUser` field."""
-  targetUser: String
-
-  """Checks for equality with the object’s `mentioncodes` field."""
-  mentioncodes: [String]
 }
 
 """An input for mutations affecting `Comment`"""
@@ -99,6 +103,9 @@ input CommentInput {
   """用户code"""
   userCode: String
 
+  """回复的目标用户code"""
+  targetUser: String
+
   """回复的帖子id"""
   topicId: Int!
 
@@ -107,6 +114,9 @@ input CommentInput {
 
   """回复内容"""
   content: String
+
+  """@的人"""
+  mentioncodes: [String]
 
   """创建时间"""
   createdAt: Datetime
@@ -122,8 +132,6 @@ input CommentInput {
 
   """是否已读"""
   read: Boolean
-  targetUser: String
-  mentioncodes: [String]
 }
 
 """
@@ -136,6 +144,9 @@ input CommentPatch {
   """用户code"""
   userCode: String
 
+  """回复的目标用户code"""
+  targetUser: String
+
   """回复的帖子id"""
   topicId: Int
 
@@ -144,6 +155,9 @@ input CommentPatch {
 
   """回复内容"""
   content: String
+
+  """@的人"""
+  mentioncodes: [String]
 
   """创建时间"""
   createdAt: Datetime
@@ -159,8 +173,6 @@ input CommentPatch {
 
   """是否已读"""
   read: Boolean
-  targetUser: String
-  mentioncodes: [String]
 }
 
 """A connection to a list of `Comment` values."""
@@ -196,12 +208,16 @@ enum CommentsOrderBy {
   ID_DESC
   USER_CODE_ASC
   USER_CODE_DESC
+  TARGET_USER_ASC
+  TARGET_USER_DESC
   TOPIC_ID_ASC
   TOPIC_ID_DESC
   PARENT_ID_ASC
   PARENT_ID_DESC
   CONTENT_ASC
   CONTENT_DESC
+  MENTIONCODES_ASC
+  MENTIONCODES_DESC
   CREATED_AT_ASC
   CREATED_AT_DESC
   UPDATED_AT_ASC
@@ -212,10 +228,6 @@ enum CommentsOrderBy {
   PATH_DESC
   READ_ASC
   READ_DESC
-  TARGET_USER_ASC
-  TARGET_USER_DESC
-  MENTIONCODES_ASC
-  MENTIONCODES_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
 }
@@ -1381,6 +1393,12 @@ type Mention implements Node {
   """回复的父级id，回复回复时存在"""
   parentId: Int
 
+  """回复id"""
+  commentId: Int
+
+  """是否已读"""
+  read: Boolean
+
   """创建时间"""
   createdAt: Datetime!
 
@@ -1389,10 +1407,6 @@ type Mention implements Node {
 
   """删除时间"""
   deletedAt: Datetime
-  commentId: Int
-
-  """是否已读"""
-  read: Boolean
 
   """Reads a single `User` that is related to this `Mention`."""
   userByUserCode: User
@@ -1420,6 +1434,12 @@ input MentionCondition {
   """Checks for equality with the object’s `parentId` field."""
   parentId: Int
 
+  """Checks for equality with the object’s `commentId` field."""
+  commentId: Int
+
+  """Checks for equality with the object’s `read` field."""
+  read: Boolean
+
   """Checks for equality with the object’s `createdAt` field."""
   createdAt: Datetime
 
@@ -1428,12 +1448,6 @@ input MentionCondition {
 
   """Checks for equality with the object’s `deletedAt` field."""
   deletedAt: Datetime
-
-  """Checks for equality with the object’s `commentId` field."""
-  commentId: Int
-
-  """Checks for equality with the object’s `read` field."""
-  read: Boolean
 }
 
 """An input for mutations affecting `Mention`"""
@@ -1453,6 +1467,12 @@ input MentionInput {
   """回复的父级id，回复回复时存在"""
   parentId: Int
 
+  """回复id"""
+  commentId: Int
+
+  """是否已读"""
+  read: Boolean
+
   """创建时间"""
   createdAt: Datetime
 
@@ -1461,10 +1481,6 @@ input MentionInput {
 
   """删除时间"""
   deletedAt: Datetime
-  commentId: Int
-
-  """是否已读"""
-  read: Boolean
 }
 
 """
@@ -1486,6 +1502,12 @@ input MentionPatch {
   """回复的父级id，回复回复时存在"""
   parentId: Int
 
+  """回复id"""
+  commentId: Int
+
+  """是否已读"""
+  read: Boolean
+
   """创建时间"""
   createdAt: Datetime
 
@@ -1494,10 +1516,6 @@ input MentionPatch {
 
   """删除时间"""
   deletedAt: Datetime
-  commentId: Int
-
-  """是否已读"""
-  read: Boolean
 }
 
 """A connection to a list of `Mention` values."""
@@ -1539,16 +1557,16 @@ enum MentionsOrderBy {
   TOPIC_ID_DESC
   PARENT_ID_ASC
   PARENT_ID_DESC
+  COMMENT_ID_ASC
+  COMMENT_ID_DESC
+  READ_ASC
+  READ_DESC
   CREATED_AT_ASC
   CREATED_AT_DESC
   UPDATED_AT_ASC
   UPDATED_AT_DESC
   DELETED_AT_ASC
   DELETED_AT_DESC
-  COMMENT_ID_ASC
-  COMMENT_ID_DESC
-  READ_ASC
-  READ_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
 }
@@ -2608,40 +2626,6 @@ type Query implements Node {
     """Skip the first `n` values."""
     offset: Int
   ): [Comment]
-
-  """Reads and enables pagination through a set of `Comment`."""
-  getUserUnreadComments(
-    usercode: String
-
-    """Only read the first `n` values of the set."""
-    first: Int
-
-    """Only read the last `n` values of the set."""
-    last: Int
-
-    """
-    Skip the first `n` values from our `after` cursor, an alternative to cursor
-    based pagination. May not be used with `last`.
-    """
-    offset: Int
-
-    """Read all values in the set before (above) this cursor."""
-    before: Cursor
-
-    """Read all values in the set after (below) this cursor."""
-    after: Cursor
-  ): CommentsConnection!
-
-  """Reads and enables pagination through a set of `Comment`."""
-  getUserUnreadCommentsList(
-    usercode: String
-
-    """Only read the first `n` values of the set."""
-    first: Int
-
-    """Skip the first `n` values."""
-    offset: Int
-  ): [Comment]
   myArrayToString(tags: [String]!): String
 
   """Reads a single `Comment` using its globally unique `ID`."""
@@ -3098,8 +3082,14 @@ type Topic implements Node {
   """帖子标题"""
   title: String
 
+  """帖子标签"""
+  tags: [String]
+
   """帖子内容"""
   content: String
+
+  """@的人"""
+  mentioncodes: [String]
 
   """点赞数"""
   likeNum: BigInt
@@ -3121,60 +3111,12 @@ type Topic implements Node {
 
   """删除时间"""
   deletedAt: Datetime
-  tags: [String]
-  mentioncodes: [String]
 
   """Reads a single `User` that is related to this `Topic`."""
   userByUserCode: User
 
   """Reads a single `Section` that is related to this `Topic`."""
   section: Section
-
-  """Reads and enables pagination through a set of `Comment`."""
-  comments(
-    """Only read the first `n` values of the set."""
-    first: Int
-
-    """Only read the last `n` values of the set."""
-    last: Int
-
-    """
-    Skip the first `n` values from our `after` cursor, an alternative to cursor
-    based pagination. May not be used with `last`.
-    """
-    offset: Int
-
-    """Read all values in the set before (above) this cursor."""
-    before: Cursor
-
-    """Read all values in the set after (below) this cursor."""
-    after: Cursor
-
-    """The method to use when ordering `Comment`."""
-    orderBy: [CommentsOrderBy!] = [PRIMARY_KEY_ASC]
-
-    """
-    A condition to be used in determining which values should be returned by the collection.
-    """
-    condition: CommentCondition
-  ): CommentsConnection!
-
-  """Reads and enables pagination through a set of `Comment`."""
-  commentsList(
-    """Only read the first `n` values of the set."""
-    first: Int
-
-    """Skip the first `n` values."""
-    offset: Int
-
-    """The method to use when ordering `Comment`."""
-    orderBy: [CommentsOrderBy!]
-
-    """
-    A condition to be used in determining which values should be returned by the collection.
-    """
-    condition: CommentCondition
-  ): [Comment!]!
 
   """Reads and enables pagination through a set of `TopicTag`."""
   topicTags(
@@ -3221,6 +3163,52 @@ type Topic implements Node {
     """
     condition: TopicTagCondition
   ): [TopicTag!]!
+
+  """Reads and enables pagination through a set of `Comment`."""
+  comments(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Comment`."""
+    orderBy: [CommentsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: CommentCondition
+  ): CommentsConnection!
+
+  """Reads and enables pagination through a set of `Comment`."""
+  commentsList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Comment`."""
+    orderBy: [CommentsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: CommentCondition
+  ): [Comment!]!
 
   """Reads and enables pagination through a set of `Mention`."""
   mentions(
@@ -3331,8 +3319,14 @@ input TopicCondition {
   """Checks for equality with the object’s `title` field."""
   title: String
 
+  """Checks for equality with the object’s `tags` field."""
+  tags: [String]
+
   """Checks for equality with the object’s `content` field."""
   content: String
+
+  """Checks for equality with the object’s `mentioncodes` field."""
+  mentioncodes: [String]
 
   """Checks for equality with the object’s `likeNum` field."""
   likeNum: BigInt
@@ -3354,12 +3348,6 @@ input TopicCondition {
 
   """Checks for equality with the object’s `deletedAt` field."""
   deletedAt: Datetime
-
-  """Checks for equality with the object’s `tags` field."""
-  tags: [String]
-
-  """Checks for equality with the object’s `mentioncodes` field."""
-  mentioncodes: [String]
 }
 
 """An input for mutations affecting `Topic`"""
@@ -3376,8 +3364,14 @@ input TopicInput {
   """帖子标题"""
   title: String
 
+  """帖子标签"""
+  tags: [String]
+
   """帖子内容"""
   content: String
+
+  """@的人"""
+  mentioncodes: [String]
 
   """点赞数"""
   likeNum: BigInt
@@ -3399,8 +3393,6 @@ input TopicInput {
 
   """删除时间"""
   deletedAt: Datetime
-  tags: [String]
-  mentioncodes: [String]
 }
 
 """
@@ -3419,8 +3411,14 @@ input TopicPatch {
   """帖子标题"""
   title: String
 
+  """帖子标签"""
+  tags: [String]
+
   """帖子内容"""
   content: String
+
+  """@的人"""
+  mentioncodes: [String]
 
   """点赞数"""
   likeNum: BigInt
@@ -3442,8 +3440,6 @@ input TopicPatch {
 
   """删除时间"""
   deletedAt: Datetime
-  tags: [String]
-  mentioncodes: [String]
 }
 
 """A connection to a list of `Topic` values."""
@@ -3483,8 +3479,12 @@ enum TopicsOrderBy {
   SECTION_ID_DESC
   TITLE_ASC
   TITLE_DESC
+  TAGS_ASC
+  TAGS_DESC
   CONTENT_ASC
   CONTENT_DESC
+  MENTIONCODES_ASC
+  MENTIONCODES_DESC
   LIKE_NUM_ASC
   LIKE_NUM_DESC
   COMMENT_NUM_ASC
@@ -3499,10 +3499,6 @@ enum TopicsOrderBy {
   UPDATED_AT_DESC
   DELETED_AT_ASC
   DELETED_AT_DESC
-  TAGS_ASC
-  TAGS_DESC
-  MENTIONCODES_ASC
-  MENTIONCODES_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
 }
@@ -4243,8 +4239,17 @@ type User implements Node {
   """获得点赞数"""
   receivedLikeNum: BigInt
 
-  """获得回复数"""
+  """获得评论数"""
   receivedCommentNum: BigInt
+
+  """获得评论数"""
+  receivedMentionNum: BigInt
+
+  """未读@数"""
+  unreadMentionNum: BigInt
+
+  """未读评论数"""
+  unreadCommentNum: BigInt
 
   """是否在线"""
   isonline: Boolean
@@ -4261,17 +4266,8 @@ type User implements Node {
   """更新时间"""
   updatedAt: Datetime!
 
-  """未读评论数"""
-  unreadCommentNum: BigInt
-
-  """未读@数"""
-  unreadMentionNum: BigInt
-
-  """获得评论数"""
-  receivedMentionNum: BigInt
-
-  """Reads and enables pagination through a set of `Comment`."""
-  commentsByUserCode(
+  """Reads and enables pagination through a set of `Userlog`."""
+  userlogsByUserCode(
     """Only read the first `n` values of the set."""
     first: Int
 
@@ -4290,31 +4286,31 @@ type User implements Node {
     """Read all values in the set after (below) this cursor."""
     after: Cursor
 
-    """The method to use when ordering `Comment`."""
-    orderBy: [CommentsOrderBy!] = [PRIMARY_KEY_ASC]
+    """The method to use when ordering `Userlog`."""
+    orderBy: [UserlogsOrderBy!] = [PRIMARY_KEY_ASC]
 
     """
     A condition to be used in determining which values should be returned by the collection.
     """
-    condition: CommentCondition
-  ): CommentsConnection!
+    condition: UserlogCondition
+  ): UserlogsConnection!
 
-  """Reads and enables pagination through a set of `Comment`."""
-  commentsByUserCodeList(
+  """Reads and enables pagination through a set of `Userlog`."""
+  userlogsByUserCodeList(
     """Only read the first `n` values of the set."""
     first: Int
 
     """Skip the first `n` values."""
     offset: Int
 
-    """The method to use when ordering `Comment`."""
-    orderBy: [CommentsOrderBy!]
+    """The method to use when ordering `Userlog`."""
+    orderBy: [UserlogsOrderBy!]
 
     """
     A condition to be used in determining which values should be returned by the collection.
     """
-    condition: CommentCondition
-  ): [Comment!]!
+    condition: UserlogCondition
+  ): [Userlog!]!
 
   """Reads and enables pagination through a set of `Topic`."""
   topicsByUserCode(
@@ -4362,8 +4358,8 @@ type User implements Node {
     condition: TopicCondition
   ): [Topic!]!
 
-  """Reads and enables pagination through a set of `Userlog`."""
-  userlogsByUserCode(
+  """Reads and enables pagination through a set of `Comment`."""
+  commentsByUserCode(
     """Only read the first `n` values of the set."""
     first: Int
 
@@ -4382,31 +4378,31 @@ type User implements Node {
     """Read all values in the set after (below) this cursor."""
     after: Cursor
 
-    """The method to use when ordering `Userlog`."""
-    orderBy: [UserlogsOrderBy!] = [PRIMARY_KEY_ASC]
+    """The method to use when ordering `Comment`."""
+    orderBy: [CommentsOrderBy!] = [PRIMARY_KEY_ASC]
 
     """
     A condition to be used in determining which values should be returned by the collection.
     """
-    condition: UserlogCondition
-  ): UserlogsConnection!
+    condition: CommentCondition
+  ): CommentsConnection!
 
-  """Reads and enables pagination through a set of `Userlog`."""
-  userlogsByUserCodeList(
+  """Reads and enables pagination through a set of `Comment`."""
+  commentsByUserCodeList(
     """Only read the first `n` values of the set."""
     first: Int
 
     """Skip the first `n` values."""
     offset: Int
 
-    """The method to use when ordering `Userlog`."""
-    orderBy: [UserlogsOrderBy!]
+    """The method to use when ordering `Comment`."""
+    orderBy: [CommentsOrderBy!]
 
     """
     A condition to be used in determining which values should be returned by the collection.
     """
-    condition: UserlogCondition
-  ): [Userlog!]!
+    condition: CommentCondition
+  ): [Comment!]!
 
   """Reads and enables pagination through a set of `Mention`."""
   mentionsByUserCode(
@@ -4550,6 +4546,15 @@ input UserCondition {
   """Checks for equality with the object’s `receivedCommentNum` field."""
   receivedCommentNum: BigInt
 
+  """Checks for equality with the object’s `receivedMentionNum` field."""
+  receivedMentionNum: BigInt
+
+  """Checks for equality with the object’s `unreadMentionNum` field."""
+  unreadMentionNum: BigInt
+
+  """Checks for equality with the object’s `unreadCommentNum` field."""
+  unreadCommentNum: BigInt
+
   """Checks for equality with the object’s `isonline` field."""
   isonline: Boolean
 
@@ -4564,15 +4569,6 @@ input UserCondition {
 
   """Checks for equality with the object’s `updatedAt` field."""
   updatedAt: Datetime
-
-  """Checks for equality with the object’s `unreadCommentNum` field."""
-  unreadCommentNum: BigInt
-
-  """Checks for equality with the object’s `unreadMentionNum` field."""
-  unreadMentionNum: BigInt
-
-  """Checks for equality with the object’s `receivedMentionNum` field."""
-  receivedMentionNum: BigInt
 }
 
 """An input for mutations affecting `User`"""
@@ -4619,8 +4615,17 @@ input UserInput {
   """获得点赞数"""
   receivedLikeNum: BigInt
 
-  """获得回复数"""
+  """获得评论数"""
   receivedCommentNum: BigInt
+
+  """获得评论数"""
+  receivedMentionNum: BigInt
+
+  """未读@数"""
+  unreadMentionNum: BigInt
+
+  """未读评论数"""
+  unreadCommentNum: BigInt
 
   """是否在线"""
   isonline: Boolean
@@ -4636,15 +4641,6 @@ input UserInput {
 
   """更新时间"""
   updatedAt: Datetime
-
-  """未读评论数"""
-  unreadCommentNum: BigInt
-
-  """未读@数"""
-  unreadMentionNum: BigInt
-
-  """获得评论数"""
-  receivedMentionNum: BigInt
 }
 
 type Userlog implements Node {
@@ -4827,8 +4823,17 @@ input UserPatch {
   """获得点赞数"""
   receivedLikeNum: BigInt
 
-  """获得回复数"""
+  """获得评论数"""
   receivedCommentNum: BigInt
+
+  """获得评论数"""
+  receivedMentionNum: BigInt
+
+  """未读@数"""
+  unreadMentionNum: BigInt
+
+  """未读评论数"""
+  unreadCommentNum: BigInt
 
   """是否在线"""
   isonline: Boolean
@@ -4844,15 +4849,6 @@ input UserPatch {
 
   """更新时间"""
   updatedAt: Datetime
-
-  """未读评论数"""
-  unreadCommentNum: BigInt
-
-  """未读@数"""
-  unreadMentionNum: BigInt
-
-  """获得评论数"""
-  receivedMentionNum: BigInt
 }
 
 """A connection to a list of `User` values."""
@@ -4914,6 +4910,12 @@ enum UsersOrderBy {
   RECEIVED_LIKE_NUM_DESC
   RECEIVED_COMMENT_NUM_ASC
   RECEIVED_COMMENT_NUM_DESC
+  RECEIVED_MENTION_NUM_ASC
+  RECEIVED_MENTION_NUM_DESC
+  UNREAD_MENTION_NUM_ASC
+  UNREAD_MENTION_NUM_DESC
+  UNREAD_COMMENT_NUM_ASC
+  UNREAD_COMMENT_NUM_DESC
   ISONLINE_ASC
   ISONLINE_DESC
   LAST_ONLINE_IP_ASC
@@ -4924,12 +4926,6 @@ enum UsersOrderBy {
   CREATED_AT_DESC
   UPDATED_AT_ASC
   UPDATED_AT_DESC
-  UNREAD_COMMENT_NUM_ASC
-  UNREAD_COMMENT_NUM_DESC
-  UNREAD_MENTION_NUM_ASC
-  UNREAD_MENTION_NUM_DESC
-  RECEIVED_MENTION_NUM_ASC
-  RECEIVED_MENTION_NUM_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
 }

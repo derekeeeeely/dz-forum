@@ -1,7 +1,7 @@
 #!/bin/bash
 POSTGRES_INIT_DIR=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
-psql -d regneva -U root -w <<-EOSQL
+psql -d regneva -U derekely -w <<-EOSQL
 
 \echo
 \echo 'Initializing database...'
@@ -14,6 +14,10 @@ DROP TABLE IF EXISTS public.topic CASCADE;
 DROP TABLE IF EXISTS public.section CASCADE;
 DROP TABLE IF EXISTS public.userlog CASCADE;
 DROP TABLE IF EXISTS public.user CASCADE;
+DROP TABLE IF EXISTS public.mention CASCADE;
+DROP TABLE IF EXISTS public.likes CASCADE;
+DROP TABLE IF EXISTS public.tag CASCADE;
+DROP TABLE IF EXISTS public.topic_tag CASCADE;
 
 
 \echo
@@ -64,7 +68,14 @@ DROP TABLE IF EXISTS public.user CASCADE;
 \echo 'Creating mentions...'
 \echo
 
-\i ${POSTGRES_INIT_DIR}/init/mentions.sql;
+\i ${POSTGRES_INIT_DIR}/init/mention.sql;
+
+\echo
+\echo 'Creating likes...'
+\echo
+
+\i ${POSTGRES_INIT_DIR}/init/likes.sql;
+
 
 \echo
 \echo 'Creating functions...'

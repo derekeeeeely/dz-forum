@@ -7,11 +7,11 @@ export type MentionCondition = {
     readonly targetUser?: string | null;
     readonly topicId?: number | null;
     readonly parentId?: number | null;
+    readonly commentId?: number | null;
+    readonly read?: boolean | null;
     readonly createdAt?: any | null;
     readonly updatedAt?: any | null;
     readonly deletedAt?: any | null;
-    readonly commentId?: number | null;
-    readonly read?: boolean | null;
 };
 export type subscriptionsMentionSubscriptionVariables = {
     readonly userCode: string;

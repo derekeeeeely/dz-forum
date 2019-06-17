@@ -1,17 +1,17 @@
 export default {
   development: {
-    port: 16105,
-    serverHost: 'http://127.0.0.1:16105',
+    port: 3000,
+    serverHost: 'http://127.0.0.1:3000',
     oss: {
 
     },
     pg: {
       database: 'regneva',
       host: '127.0.0.1',
-      password: '12345678',
+      password: '',
       port: 5432,
       schema: ['public'],
-      user: 'root',
+      user: 'derekely',
     },
     log: {
       logpath: './logs',
@@ -31,7 +31,7 @@ export default {
         host: 'regnevaupstream',
         name: 'regneva',
         path: '/',
-        port: 16105
+        port: 3000
       },
       upstream: {
         healthchecks: {

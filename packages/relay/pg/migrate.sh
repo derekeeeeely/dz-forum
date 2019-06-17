@@ -1,7 +1,7 @@
 #!/bin/bash
 POSTGRES_INIT_DIR=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
-psql -d regneva -U root -w <<-EOSQL
+psql -d regneva -U derekely -w <<-EOSQL
 
 \echo
 \echo 'migrate database...'

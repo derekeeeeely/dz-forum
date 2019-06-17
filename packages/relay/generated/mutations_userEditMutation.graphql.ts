@@ -22,14 +22,14 @@ export type UserPatch = {
     readonly likeNum?: any | null;
     readonly receivedLikeNum?: any | null;
     readonly receivedCommentNum?: any | null;
+    readonly receivedMentionNum?: any | null;
+    readonly unreadMentionNum?: any | null;
+    readonly unreadCommentNum?: any | null;
     readonly isonline?: boolean | null;
     readonly lastOnlineIp?: string | null;
     readonly lastOnlineTime?: any | null;
     readonly createdAt?: any | null;
     readonly updatedAt?: any | null;
-    readonly unreadCommentNum?: any | null;
-    readonly unreadMentionNum?: any | null;
-    readonly receivedMentionNum?: any | null;
 };
 export type mutations_userEditMutationVariables = {
     readonly input: UpdateUserInput;
