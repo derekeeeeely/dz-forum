@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "regneva",
+      "script": "./build/index.js",
+      "cwd": "/Users/derekely/derek/dz/regneva/packages/server",
+      "instances": 4,
+      "exec_mode": "cluster",
+      "watch": false,
+      "env_development": {
+        "NODE_ENV": "development"
+      },
+      "log_date_format": "DD-MM-YYYY HH:MM:ss"
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+.regneva-head{
+  display: flex;
+  padding: 0;
+  background: #fff;
+  .regneva-logo{
+    font-size: 20px;
+    color: #fe751a;
+    margin: 0 2%;
+    @media (min-width: 900px) {
+      margin: 0 6%;
+    }
+    cursor: pointer;
+    img{
+      width: 32px;
+      height: 32px;
+      margin: -5px 10px 0 0;
+    }
+  }
+  .regneva-user{
+    position: absolute;
+    top: 0;
+    right: 2%;
+    color: #fe751a;
+    cursor: pointer;
+    @media (min-width: 900px) {
+      right: 6%;
+    }
+    .ant-badge{
+      margin-right: 10px;
+    }
+  }
+}
+.regneva-container{
+  padding: 0 2%;
+  min-height: 100vh;
+  margin-top: 10px;
+  @media (min-width: 900px) {
+    padding: 0 6%;
+  }
+  :global .ant-comment-nested{
+    margin-left: 24px;
+  }
+  :global .ant-list-item-meta-description{
+    font-size: 12px;
+  }
+  :global .ant-comment-actions{
+    margin: 5px 0;
+  }
+  :global .ant-comment-inner{
+    padding: 8px 0;
+  }
+  :global .ant-comment-actions > li {
+    margin-right: 10px;
+    a i{
+      color: #666;
+    }
+  }
+}
+.ant-btn.go-topic{
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  bottom: 100px;
+  position: fixed;
+  right: 20px;
+  font-size: 16px;
+  padding: 0;
+}
+.ant-comment-content-detail{
+  img{
+    max-width: 100%;
+  }
+}
+:global .ant-comment-content{
+  display: flex;
+  flex-direction: column;
+}
+.ant-drawer-bottom.ant-drawer-open.comment-drawer{
+  .ant-drawer-content-wrapper{
+    height: auto!important;
+    max-height: 500px;
+    overflow-y: scroll;
+  }
+}
+.avatar-pop{
+  text-align: center;
+  font-size: 12px;
+  max-width: 100px;
+  img{
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+  }
+  p{
+    margin-bottom: 5px;
+  }
+  .avatar-des{
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-bottom: 5px;
+  }
+}
+
+
+.text-editor {
+  .quill {
+    background: #fff;
+  }
+  .ql-toolbar.ql-snow{
+    border: 1px solid #eee;
+    padding: 10px;
+  }
+  .ql-container.ql-snow{
+    border: 1px solid #eee;
+  }
+  .ql-editor{
+    @media (min-width: 900px) {
+      height: 400px;
+    }
+    height: 300px;
+    overflow-y: scroll;
+  }
+  .ql-mention-list {
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+  .ql-toolbar.ql-snow .ql-formats{
+    margin-bottom: 5px;
+  }
+}
+
+.form-editor{
+  .ant-form-item-control{
+    line-height: unset;
+  }
+}
+

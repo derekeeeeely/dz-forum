@@ -1,0 +1,21 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "clean": "lerna clean",
+    "bs": "lerna bootstrap",
+    "dev-all": "lerna run dev --parallel",
+    "clean-all": "lerna run clean --parallel",
+    "web-build": "lerna run build --parallel",
+    "web-upload": "lerna exec --scope @regneva/web -- yarn run upload",
+    "web-start": "lerna exec --scope @regneva/server -- yarn run start",
+    "server": "lerna exec --scope @regneva/server -- yarn run dev",
+    "relay": "lerna exec --scope @regneva/relay -- yarn run dev"
+  },
+  "dependencies": {
+    "lerna": "^3.14.1"
+  }
+}

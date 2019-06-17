@@ -1,0 +1,4935 @@
+"""
+A signed eight-byte integer. The upper big integer values are greater than the
+max value for a JavaScript number. Therefore all big integers will be output as
+strings and not numbers.
+"""
+scalar BigInt
+
+type Comment implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+
+  """回复id"""
+  id: Int!
+
+  """用户code"""
+  userCode: String
+
+  """回复的帖子id"""
+  topicId: Int!
+
+  """回复的父级id，回复回复时存在"""
+  parentId: Int
+
+  """回复内容"""
+  content: String
+
+  """创建时间"""
+  createdAt: Datetime!
+
+  """更新时间"""
+  updatedAt: Datetime!
+
+  """删除时间"""
+  deletedAt: Datetime
+
+  """回复路径"""
+  path: [Int]
+
+  """是否已读"""
+  read: Boolean
+  targetUser: String
+  mentioncodes: [String]
+
+  """Reads a single `User` that is related to this `Comment`."""
+  userByUserCode: User
+
+  """Reads a single `Topic` that is related to this `Comment`."""
+  topic: Topic
+}
+
+"""
+A condition to be used against `Comment` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input CommentCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+
+  """Checks for equality with the object’s `userCode` field."""
+  userCode: String
+
+  """Checks for equality with the object’s `topicId` field."""
+  topicId: Int
+
+  """Checks for equality with the object’s `parentId` field."""
+  parentId: Int
+
+  """Checks for equality with the object’s `content` field."""
+  content: String
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `updatedAt` field."""
+  updatedAt: Datetime
+
+  """Checks for equality with the object’s `deletedAt` field."""
+  deletedAt: Datetime
+
+  """Checks for equality with the object’s `path` field."""
+  path: [Int]
+
+  """Checks for equality with the object’s `read` field."""
+  read: Boolean
+
+  """Checks for equality with the object’s `targetUser` field."""
+  targetUser: String
+
+  """Checks for equality with the object’s `mentioncodes` field."""
+  mentioncodes: [String]
+}
+
+"""An input for mutations affecting `Comment`"""
+input CommentInput {
+  """回复id"""
+  id: Int
+
+  """用户code"""
+  userCode: String
+
+  """回复的帖子id"""
+  topicId: Int!
+
+  """回复的父级id，回复回复时存在"""
+  parentId: Int
+
+  """回复内容"""
+  content: String
+
+  """创建时间"""
+  createdAt: Datetime
+
+  """更新时间"""
+  updatedAt: Datetime
+
+  """删除时间"""
+  deletedAt: Datetime
+
+  """回复路径"""
+  path: [Int]
+
+  """是否已读"""
+  read: Boolean
+  targetUser: String
+  mentioncodes: [String]
+}
+
+"""
+Represents an update to a `Comment`. Fields that are set will be updated.
+"""
+input CommentPatch {
+  """回复id"""
+  id: Int
+
+  """用户code"""
+  userCode: String
+
+  """回复的帖子id"""
+  topicId: Int
+
+  """回复的父级id，回复回复时存在"""
+  parentId: Int
+
+  """回复内容"""
+  content: String
+
+  """创建时间"""
+  createdAt: Datetime
+
+  """更新时间"""
+  updatedAt: Datetime
+
+  """删除时间"""
+  deletedAt: Datetime
+
+  """回复路径"""
+  path: [Int]
+
+  """是否已读"""
+  read: Boolean
+  targetUser: String
+  mentioncodes: [String]
+}
+
+"""A connection to a list of `Comment` values."""
+type CommentsConnection {
+  """A list of `Comment` objects."""
+  nodes: [Comment]!
+
+  """
+  A list of edges which contains the `Comment` and cursor to aid in pagination.
+  """
+  edges: [CommentsEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Comment` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Comment` edge in the connection."""
+type CommentsEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Comment` at the end of the edge."""
+  node: Comment
+}
+
+"""Methods to use when ordering `Comment`."""
+enum CommentsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  USER_CODE_ASC
+  USER_CODE_DESC
+  TOPIC_ID_ASC
+  TOPIC_ID_DESC
+  PARENT_ID_ASC
+  PARENT_ID_DESC
+  CONTENT_ASC
+  CONTENT_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  DELETED_AT_ASC
+  DELETED_AT_DESC
+  PATH_ASC
+  PATH_DESC
+  READ_ASC
+  READ_DESC
+  TARGET_USER_ASC
+  TARGET_USER_DESC
+  MENTIONCODES_ASC
+  MENTIONCODES_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""All input for the create `Comment` mutation."""
+input CreateCommentInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `Comment` to be created by this mutation."""
+  comment: CommentInput!
+}
+
+"""The output of our create `Comment` mutation."""
+type CreateCommentPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Comment` that was created by this mutation."""
+  comment: Comment
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Comment`."""
+  userByUserCode: User
+
+  """Reads a single `Topic` that is related to this `Comment`."""
+  topic: Topic
+
+  """An edge for our `Comment`. May be used by Relay 1."""
+  commentEdge(
+    """The method to use when ordering `Comment`."""
+    orderBy: [CommentsOrderBy!] = PRIMARY_KEY_ASC
+  ): CommentsEdge
+}
+
+"""All input for the create `Like` mutation."""
+input CreateLikeInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `Like` to be created by this mutation."""
+  like: LikeInput!
+}
+
+"""The output of our create `Like` mutation."""
+type CreateLikePayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Like` that was created by this mutation."""
+  like: Like
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Like`."""
+  userByUserCode: User
+
+  """Reads a single `Topic` that is related to this `Like`."""
+  topic: Topic
+
+  """An edge for our `Like`. May be used by Relay 1."""
+  likeEdge(
+    """The method to use when ordering `Like`."""
+    orderBy: [LikesOrderBy!] = PRIMARY_KEY_ASC
+  ): LikesEdge
+}
+
+"""All input for the create `Mention` mutation."""
+input CreateMentionInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `Mention` to be created by this mutation."""
+  mention: MentionInput!
+}
+
+"""The output of our create `Mention` mutation."""
+type CreateMentionPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Mention` that was created by this mutation."""
+  mention: Mention
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Mention`."""
+  userByUserCode: User
+
+  """Reads a single `Topic` that is related to this `Mention`."""
+  topic: Topic
+
+  """An edge for our `Mention`. May be used by Relay 1."""
+  mentionEdge(
+    """The method to use when ordering `Mention`."""
+    orderBy: [MentionsOrderBy!] = PRIMARY_KEY_ASC
+  ): MentionsEdge
+}
+
+"""All input for the create `Section` mutation."""
+input CreateSectionInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `Section` to be created by this mutation."""
+  section: SectionInput!
+}
+
+"""The output of our create `Section` mutation."""
+type CreateSectionPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Section` that was created by this mutation."""
+  section: Section
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Section`. May be used by Relay 1."""
+  sectionEdge(
+    """The method to use when ordering `Section`."""
+    orderBy: [SectionsOrderBy!] = PRIMARY_KEY_ASC
+  ): SectionsEdge
+}
+
+"""All input for the create `Tag` mutation."""
+input CreateTagInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `Tag` to be created by this mutation."""
+  tag: TagInput!
+}
+
+"""The output of our create `Tag` mutation."""
+type CreateTagPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Tag` that was created by this mutation."""
+  tag: Tag
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Tag`. May be used by Relay 1."""
+  tagEdge(
+    """The method to use when ordering `Tag`."""
+    orderBy: [TagsOrderBy!] = PRIMARY_KEY_ASC
+  ): TagsEdge
+}
+
+"""All input for the create `Topic` mutation."""
+input CreateTopicInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `Topic` to be created by this mutation."""
+  topic: TopicInput!
+}
+
+"""The output of our create `Topic` mutation."""
+type CreateTopicPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Topic` that was created by this mutation."""
+  topic: Topic
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Topic`."""
+  userByUserCode: User
+
+  """Reads a single `Section` that is related to this `Topic`."""
+  section: Section
+
+  """An edge for our `Topic`. May be used by Relay 1."""
+  topicEdge(
+    """The method to use when ordering `Topic`."""
+    orderBy: [TopicsOrderBy!] = PRIMARY_KEY_ASC
+  ): TopicsEdge
+}
+
+"""All input for the create `TopicTag` mutation."""
+input CreateTopicTagInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `TopicTag` to be created by this mutation."""
+  topicTag: TopicTagInput!
+}
+
+"""The output of our create `TopicTag` mutation."""
+type CreateTopicTagPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `TopicTag` that was created by this mutation."""
+  topicTag: TopicTag
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `Topic` that is related to this `TopicTag`."""
+  topic: Topic
+
+  """Reads a single `Tag` that is related to this `TopicTag`."""
+  tag: Tag
+
+  """An edge for our `TopicTag`. May be used by Relay 1."""
+  topicTagEdge(
+    """The method to use when ordering `TopicTag`."""
+    orderBy: [TopicTagsOrderBy!] = PRIMARY_KEY_ASC
+  ): TopicTagsEdge
+}
+
+"""All input for the create `User` mutation."""
+input CreateUserInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `User` to be created by this mutation."""
+  user: UserInput!
+}
+
+"""All input for the create `Userlog` mutation."""
+input CreateUserlogInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `Userlog` to be created by this mutation."""
+  userlog: UserlogInput!
+}
+
+"""The output of our create `Userlog` mutation."""
+type CreateUserlogPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Userlog` that was created by this mutation."""
+  userlog: Userlog
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Userlog`."""
+  userByUserCode: User
+
+  """An edge for our `Userlog`. May be used by Relay 1."""
+  userlogEdge(
+    """The method to use when ordering `Userlog`."""
+    orderBy: [UserlogsOrderBy!] = PRIMARY_KEY_ASC
+  ): UserlogsEdge
+}
+
+"""The output of our create `User` mutation."""
+type CreateUserPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `User` that was created by this mutation."""
+  user: User
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `User`. May be used by Relay 1."""
+  userEdge(
+    """The method to use when ordering `User`."""
+    orderBy: [UsersOrderBy!] = PRIMARY_KEY_ASC
+  ): UsersEdge
+}
+
+"""A location in a connection that can be used for resuming pagination."""
+scalar Cursor
+
+"""The day, does not include a time."""
+scalar Date
+
+"""
+A point in time as described by the [ISO
+8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
+"""
+scalar Datetime
+
+"""All input for the `deleteCommentByNodeId` mutation."""
+input DeleteCommentByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Comment` to be deleted.
+  """
+  nodeId: ID!
+}
+
+"""All input for the `deleteComment` mutation."""
+input DeleteCommentInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """回复id"""
+  id: Int!
+}
+
+"""The output of our delete `Comment` mutation."""
+type DeleteCommentPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Comment` that was deleted by this mutation."""
+  comment: Comment
+  deletedCommentNodeId: ID
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Comment`."""
+  userByUserCode: User
+
+  """Reads a single `Topic` that is related to this `Comment`."""
+  topic: Topic
+
+  """An edge for our `Comment`. May be used by Relay 1."""
+  commentEdge(
+    """The method to use when ordering `Comment`."""
+    orderBy: [CommentsOrderBy!] = PRIMARY_KEY_ASC
+  ): CommentsEdge
+}
+
+"""All input for the `deleteLikeByNodeId` mutation."""
+input DeleteLikeByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Like` to be deleted.
+  """
+  nodeId: ID!
+}
+
+"""All input for the `deleteLike` mutation."""
+input DeleteLikeInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """点赞 id"""
+  id: Int!
+}
+
+"""The output of our delete `Like` mutation."""
+type DeleteLikePayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Like` that was deleted by this mutation."""
+  like: Like
+  deletedLikeNodeId: ID
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Like`."""
+  userByUserCode: User
+
+  """Reads a single `Topic` that is related to this `Like`."""
+  topic: Topic
+
+  """An edge for our `Like`. May be used by Relay 1."""
+  likeEdge(
+    """The method to use when ordering `Like`."""
+    orderBy: [LikesOrderBy!] = PRIMARY_KEY_ASC
+  ): LikesEdge
+}
+
+"""All input for the `deleteMentionByNodeId` mutation."""
+input DeleteMentionByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Mention` to be deleted.
+  """
+  nodeId: ID!
+}
+
+"""All input for the `deleteMention` mutation."""
+input DeleteMentionInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """mention id"""
+  id: Int!
+}
+
+"""The output of our delete `Mention` mutation."""
+type DeleteMentionPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Mention` that was deleted by this mutation."""
+  mention: Mention
+  deletedMentionNodeId: ID
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Mention`."""
+  userByUserCode: User
+
+  """Reads a single `Topic` that is related to this `Mention`."""
+  topic: Topic
+
+  """An edge for our `Mention`. May be used by Relay 1."""
+  mentionEdge(
+    """The method to use when ordering `Mention`."""
+    orderBy: [MentionsOrderBy!] = PRIMARY_KEY_ASC
+  ): MentionsEdge
+}
+
+"""All input for the `deleteSectionByNodeId` mutation."""
+input DeleteSectionByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Section` to be deleted.
+  """
+  nodeId: ID!
+}
+
+"""All input for the `deleteSection` mutation."""
+input DeleteSectionInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """版块id"""
+  id: Int!
+}
+
+"""The output of our delete `Section` mutation."""
+type DeleteSectionPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Section` that was deleted by this mutation."""
+  section: Section
+  deletedSectionNodeId: ID
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Section`. May be used by Relay 1."""
+  sectionEdge(
+    """The method to use when ordering `Section`."""
+    orderBy: [SectionsOrderBy!] = PRIMARY_KEY_ASC
+  ): SectionsEdge
+}
+
+"""All input for the `deleteTagByNodeId` mutation."""
+input DeleteTagByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Tag` to be deleted.
+  """
+  nodeId: ID!
+}
+
+"""All input for the `deleteTag` mutation."""
+input DeleteTagInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """id"""
+  id: Int!
+}
+
+"""The output of our delete `Tag` mutation."""
+type DeleteTagPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Tag` that was deleted by this mutation."""
+  tag: Tag
+  deletedTagNodeId: ID
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Tag`. May be used by Relay 1."""
+  tagEdge(
+    """The method to use when ordering `Tag`."""
+    orderBy: [TagsOrderBy!] = PRIMARY_KEY_ASC
+  ): TagsEdge
+}
+
+"""All input for the `deleteTopicByNodeId` mutation."""
+input DeleteTopicByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Topic` to be deleted.
+  """
+  nodeId: ID!
+}
+
+"""All input for the `deleteTopic` mutation."""
+input DeleteTopicInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """帖子id"""
+  id: Int!
+}
+
+"""The output of our delete `Topic` mutation."""
+type DeleteTopicPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Topic` that was deleted by this mutation."""
+  topic: Topic
+  deletedTopicNodeId: ID
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Topic`."""
+  userByUserCode: User
+
+  """Reads a single `Section` that is related to this `Topic`."""
+  section: Section
+
+  """An edge for our `Topic`. May be used by Relay 1."""
+  topicEdge(
+    """The method to use when ordering `Topic`."""
+    orderBy: [TopicsOrderBy!] = PRIMARY_KEY_ASC
+  ): TopicsEdge
+}
+
+"""All input for the `deleteTopicTagByNodeId` mutation."""
+input DeleteTopicTagByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `TopicTag` to be deleted.
+  """
+  nodeId: ID!
+}
+
+"""All input for the `deleteTopicTag` mutation."""
+input DeleteTopicTagInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """id"""
+  id: Int!
+}
+
+"""The output of our delete `TopicTag` mutation."""
+type DeleteTopicTagPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `TopicTag` that was deleted by this mutation."""
+  topicTag: TopicTag
+  deletedTopicTagNodeId: ID
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `Topic` that is related to this `TopicTag`."""
+  topic: Topic
+
+  """Reads a single `Tag` that is related to this `TopicTag`."""
+  tag: Tag
+
+  """An edge for our `TopicTag`. May be used by Relay 1."""
+  topicTagEdge(
+    """The method to use when ordering `TopicTag`."""
+    orderBy: [TopicTagsOrderBy!] = PRIMARY_KEY_ASC
+  ): TopicTagsEdge
+}
+
+"""All input for the `deleteUserByNodeId` mutation."""
+input DeleteUserByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `User` to be deleted.
+  """
+  nodeId: ID!
+}
+
+"""All input for the `deleteUser` mutation."""
+input DeleteUserInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """员工号"""
+  code: String!
+}
+
+"""All input for the `deleteUserlogByNodeId` mutation."""
+input DeleteUserlogByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Userlog` to be deleted.
+  """
+  nodeId: ID!
+}
+
+"""All input for the `deleteUserlog` mutation."""
+input DeleteUserlogInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  id: Int!
+}
+
+"""The output of our delete `Userlog` mutation."""
+type DeleteUserlogPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Userlog` that was deleted by this mutation."""
+  userlog: Userlog
+  deletedUserlogNodeId: ID
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Userlog`."""
+  userByUserCode: User
+
+  """An edge for our `Userlog`. May be used by Relay 1."""
+  userlogEdge(
+    """The method to use when ordering `Userlog`."""
+    orderBy: [UserlogsOrderBy!] = PRIMARY_KEY_ASC
+  ): UserlogsEdge
+}
+
+"""The output of our delete `User` mutation."""
+type DeleteUserPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `User` that was deleted by this mutation."""
+  user: User
+  deletedUserNodeId: ID
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `User`. May be used by Relay 1."""
+  userEdge(
+    """The method to use when ordering `User`."""
+    orderBy: [UsersOrderBy!] = PRIMARY_KEY_ASC
+  ): UsersEdge
+}
+
+"""A `BigInt` edge in the connection."""
+type GetHomeStatisticEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `BigInt` at the end of the edge."""
+  node: BigInt
+}
+
+"""A connection to a list of `BigInt` values."""
+type GetHomeStatisticsConnection {
+  """A list of `BigInt` objects."""
+  nodes: [BigInt]!
+
+  """
+  A list of edges which contains the `BigInt` and cursor to aid in pagination.
+  """
+  edges: [GetHomeStatisticEdge!]!
+}
+
+type Like implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+
+  """点赞 id"""
+  id: Int!
+
+  """用户code"""
+  userCode: String
+
+  """帖子id"""
+  topicId: Int!
+
+  """创建时间"""
+  createdAt: Datetime!
+
+  """更新时间"""
+  updatedAt: Datetime!
+
+  """删除时间"""
+  deletedAt: Datetime
+
+  """Reads a single `User` that is related to this `Like`."""
+  userByUserCode: User
+
+  """Reads a single `Topic` that is related to this `Like`."""
+  topic: Topic
+}
+
+"""
+A condition to be used against `Like` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input LikeCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+
+  """Checks for equality with the object’s `userCode` field."""
+  userCode: String
+
+  """Checks for equality with the object’s `topicId` field."""
+  topicId: Int
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `updatedAt` field."""
+  updatedAt: Datetime
+
+  """Checks for equality with the object’s `deletedAt` field."""
+  deletedAt: Datetime
+}
+
+"""An input for mutations affecting `Like`"""
+input LikeInput {
+  """点赞 id"""
+  id: Int
+
+  """用户code"""
+  userCode: String
+
+  """帖子id"""
+  topicId: Int!
+
+  """创建时间"""
+  createdAt: Datetime
+
+  """更新时间"""
+  updatedAt: Datetime
+
+  """删除时间"""
+  deletedAt: Datetime
+}
+
+"""Represents an update to a `Like`. Fields that are set will be updated."""
+input LikePatch {
+  """点赞 id"""
+  id: Int
+
+  """用户code"""
+  userCode: String
+
+  """帖子id"""
+  topicId: Int
+
+  """创建时间"""
+  createdAt: Datetime
+
+  """更新时间"""
+  updatedAt: Datetime
+
+  """删除时间"""
+  deletedAt: Datetime
+}
+
+"""A connection to a list of `Like` values."""
+type LikesConnection {
+  """A list of `Like` objects."""
+  nodes: [Like]!
+
+  """
+  A list of edges which contains the `Like` and cursor to aid in pagination.
+  """
+  edges: [LikesEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Like` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Like` edge in the connection."""
+type LikesEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Like` at the end of the edge."""
+  node: Like
+}
+
+"""Methods to use when ordering `Like`."""
+enum LikesOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  USER_CODE_ASC
+  USER_CODE_DESC
+  TOPIC_ID_ASC
+  TOPIC_ID_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  DELETED_AT_ASC
+  DELETED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""All input for the `likeTopic` mutation."""
+input LikeTopicInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  topicid: Int
+  usercode: String
+  type: String
+}
+
+"""The output of our `likeTopic` mutation."""
+type LikeTopicPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+  string: String
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+}
+
+type ListenPayload {
+  """
+  Our root query field type. Allows us to run any query from our subscription payload.
+  """
+  query: Query
+  relatedNode: Node
+  relatedNodeId: ID
+}
+
+"""All input for the `markAllCommentAsread` mutation."""
+input MarkAllCommentAsreadInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  usercode: String
+}
+
+"""The output of our `markAllCommentAsread` mutation."""
+type MarkAllCommentAsreadPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+  string: String
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+}
+
+"""All input for the `markAllMentionAsread` mutation."""
+input MarkAllMentionAsreadInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  usercode: String
+}
+
+"""The output of our `markAllMentionAsread` mutation."""
+type MarkAllMentionAsreadPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+  string: String
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+}
+
+"""All input for the `markCommentAsread` mutation."""
+input MarkCommentAsreadInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  commentid: Int
+  usercode: String
+}
+
+"""The output of our `markCommentAsread` mutation."""
+type MarkCommentAsreadPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+  string: String
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+}
+
+"""All input for the `markMentionAsread` mutation."""
+input MarkMentionAsreadInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  mentionid: Int
+  usercode: String
+}
+
+"""The output of our `markMentionAsread` mutation."""
+type MarkMentionAsreadPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+  string: String
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+}
+
+type Mention implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+
+  """mention id"""
+  id: Int!
+
+  """用户code"""
+  userCode: String
+
+  """@到的用户code"""
+  targetUser: String
+
+  """帖子id"""
+  topicId: Int!
+
+  """回复的父级id，回复回复时存在"""
+  parentId: Int
+
+  """创建时间"""
+  createdAt: Datetime!
+
+  """更新时间"""
+  updatedAt: Datetime!
+
+  """删除时间"""
+  deletedAt: Datetime
+  commentId: Int
+
+  """是否已读"""
+  read: Boolean
+
+  """Reads a single `User` that is related to this `Mention`."""
+  userByUserCode: User
+
+  """Reads a single `Topic` that is related to this `Mention`."""
+  topic: Topic
+}
+
+"""
+A condition to be used against `Mention` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input MentionCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+
+  """Checks for equality with the object’s `userCode` field."""
+  userCode: String
+
+  """Checks for equality with the object’s `targetUser` field."""
+  targetUser: String
+
+  """Checks for equality with the object’s `topicId` field."""
+  topicId: Int
+
+  """Checks for equality with the object’s `parentId` field."""
+  parentId: Int
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `updatedAt` field."""
+  updatedAt: Datetime
+
+  """Checks for equality with the object’s `deletedAt` field."""
+  deletedAt: Datetime
+
+  """Checks for equality with the object’s `commentId` field."""
+  commentId: Int
+
+  """Checks for equality with the object’s `read` field."""
+  read: Boolean
+}
+
+"""An input for mutations affecting `Mention`"""
+input MentionInput {
+  """mention id"""
+  id: Int
+
+  """用户code"""
+  userCode: String
+
+  """@到的用户code"""
+  targetUser: String
+
+  """帖子id"""
+  topicId: Int!
+
+  """回复的父级id，回复回复时存在"""
+  parentId: Int
+
+  """创建时间"""
+  createdAt: Datetime
+
+  """更新时间"""
+  updatedAt: Datetime
+
+  """删除时间"""
+  deletedAt: Datetime
+  commentId: Int
+
+  """是否已读"""
+  read: Boolean
+}
+
+"""
+Represents an update to a `Mention`. Fields that are set will be updated.
+"""
+input MentionPatch {
+  """mention id"""
+  id: Int
+
+  """用户code"""
+  userCode: String
+
+  """@到的用户code"""
+  targetUser: String
+
+  """帖子id"""
+  topicId: Int
+
+  """回复的父级id，回复回复时存在"""
+  parentId: Int
+
+  """创建时间"""
+  createdAt: Datetime
+
+  """更新时间"""
+  updatedAt: Datetime
+
+  """删除时间"""
+  deletedAt: Datetime
+  commentId: Int
+
+  """是否已读"""
+  read: Boolean
+}
+
+"""A connection to a list of `Mention` values."""
+type MentionsConnection {
+  """A list of `Mention` objects."""
+  nodes: [Mention]!
+
+  """
+  A list of edges which contains the `Mention` and cursor to aid in pagination.
+  """
+  edges: [MentionsEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Mention` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Mention` edge in the connection."""
+type MentionsEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Mention` at the end of the edge."""
+  node: Mention
+}
+
+"""Methods to use when ordering `Mention`."""
+enum MentionsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  USER_CODE_ASC
+  USER_CODE_DESC
+  TARGET_USER_ASC
+  TARGET_USER_DESC
+  TOPIC_ID_ASC
+  TOPIC_ID_DESC
+  PARENT_ID_ASC
+  PARENT_ID_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  DELETED_AT_ASC
+  DELETED_AT_DESC
+  COMMENT_ID_ASC
+  COMMENT_ID_DESC
+  READ_ASC
+  READ_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+The root mutation type which contains root level fields which mutate data.
+"""
+type Mutation {
+  """Creates a single `Comment`."""
+  createComment(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateCommentInput!
+  ): CreateCommentPayload
+
+  """Creates a single `Like`."""
+  createLike(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateLikeInput!
+  ): CreateLikePayload
+
+  """Creates a single `Mention`."""
+  createMention(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateMentionInput!
+  ): CreateMentionPayload
+
+  """Creates a single `Section`."""
+  createSection(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateSectionInput!
+  ): CreateSectionPayload
+
+  """Creates a single `Tag`."""
+  createTag(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateTagInput!
+  ): CreateTagPayload
+
+  """Creates a single `Topic`."""
+  createTopic(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateTopicInput!
+  ): CreateTopicPayload
+
+  """Creates a single `TopicTag`."""
+  createTopicTag(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateTopicTagInput!
+  ): CreateTopicTagPayload
+
+  """Creates a single `User`."""
+  createUser(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateUserInput!
+  ): CreateUserPayload
+
+  """Creates a single `Userlog`."""
+  createUserlog(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateUserlogInput!
+  ): CreateUserlogPayload
+
+  """Updates a single `Comment` using its globally unique id and a patch."""
+  updateCommentByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateCommentByNodeIdInput!
+  ): UpdateCommentPayload
+
+  """Updates a single `Comment` using a unique key and a patch."""
+  updateComment(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateCommentInput!
+  ): UpdateCommentPayload
+
+  """Updates a single `Like` using its globally unique id and a patch."""
+  updateLikeByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateLikeByNodeIdInput!
+  ): UpdateLikePayload
+
+  """Updates a single `Like` using a unique key and a patch."""
+  updateLike(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateLikeInput!
+  ): UpdateLikePayload
+
+  """Updates a single `Mention` using its globally unique id and a patch."""
+  updateMentionByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateMentionByNodeIdInput!
+  ): UpdateMentionPayload
+
+  """Updates a single `Mention` using a unique key and a patch."""
+  updateMention(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateMentionInput!
+  ): UpdateMentionPayload
+
+  """Updates a single `Section` using its globally unique id and a patch."""
+  updateSectionByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateSectionByNodeIdInput!
+  ): UpdateSectionPayload
+
+  """Updates a single `Section` using a unique key and a patch."""
+  updateSection(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateSectionInput!
+  ): UpdateSectionPayload
+
+  """Updates a single `Tag` using its globally unique id and a patch."""
+  updateTagByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateTagByNodeIdInput!
+  ): UpdateTagPayload
+
+  """Updates a single `Tag` using a unique key and a patch."""
+  updateTag(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateTagInput!
+  ): UpdateTagPayload
+
+  """Updates a single `Topic` using its globally unique id and a patch."""
+  updateTopicByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateTopicByNodeIdInput!
+  ): UpdateTopicPayload
+
+  """Updates a single `Topic` using a unique key and a patch."""
+  updateTopic(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateTopicInput!
+  ): UpdateTopicPayload
+
+  """Updates a single `TopicTag` using its globally unique id and a patch."""
+  updateTopicTagByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateTopicTagByNodeIdInput!
+  ): UpdateTopicTagPayload
+
+  """Updates a single `TopicTag` using a unique key and a patch."""
+  updateTopicTag(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateTopicTagInput!
+  ): UpdateTopicTagPayload
+
+  """Updates a single `User` using its globally unique id and a patch."""
+  updateUserByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateUserByNodeIdInput!
+  ): UpdateUserPayload
+
+  """Updates a single `User` using a unique key and a patch."""
+  updateUser(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateUserInput!
+  ): UpdateUserPayload
+
+  """Updates a single `Userlog` using its globally unique id and a patch."""
+  updateUserlogByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateUserlogByNodeIdInput!
+  ): UpdateUserlogPayload
+
+  """Updates a single `Userlog` using a unique key and a patch."""
+  updateUserlog(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateUserlogInput!
+  ): UpdateUserlogPayload
+
+  """Deletes a single `Comment` using its globally unique id."""
+  deleteCommentByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteCommentByNodeIdInput!
+  ): DeleteCommentPayload
+
+  """Deletes a single `Comment` using a unique key."""
+  deleteComment(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteCommentInput!
+  ): DeleteCommentPayload
+
+  """Deletes a single `Like` using its globally unique id."""
+  deleteLikeByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteLikeByNodeIdInput!
+  ): DeleteLikePayload
+
+  """Deletes a single `Like` using a unique key."""
+  deleteLike(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteLikeInput!
+  ): DeleteLikePayload
+
+  """Deletes a single `Mention` using its globally unique id."""
+  deleteMentionByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteMentionByNodeIdInput!
+  ): DeleteMentionPayload
+
+  """Deletes a single `Mention` using a unique key."""
+  deleteMention(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteMentionInput!
+  ): DeleteMentionPayload
+
+  """Deletes a single `Section` using its globally unique id."""
+  deleteSectionByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteSectionByNodeIdInput!
+  ): DeleteSectionPayload
+
+  """Deletes a single `Section` using a unique key."""
+  deleteSection(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteSectionInput!
+  ): DeleteSectionPayload
+
+  """Deletes a single `Tag` using its globally unique id."""
+  deleteTagByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteTagByNodeIdInput!
+  ): DeleteTagPayload
+
+  """Deletes a single `Tag` using a unique key."""
+  deleteTag(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteTagInput!
+  ): DeleteTagPayload
+
+  """Deletes a single `Topic` using its globally unique id."""
+  deleteTopicByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteTopicByNodeIdInput!
+  ): DeleteTopicPayload
+
+  """Deletes a single `Topic` using a unique key."""
+  deleteTopic(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteTopicInput!
+  ): DeleteTopicPayload
+
+  """Deletes a single `TopicTag` using its globally unique id."""
+  deleteTopicTagByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteTopicTagByNodeIdInput!
+  ): DeleteTopicTagPayload
+
+  """Deletes a single `TopicTag` using a unique key."""
+  deleteTopicTag(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteTopicTagInput!
+  ): DeleteTopicTagPayload
+
+  """Deletes a single `User` using its globally unique id."""
+  deleteUserByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteUserByNodeIdInput!
+  ): DeleteUserPayload
+
+  """Deletes a single `User` using a unique key."""
+  deleteUser(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteUserInput!
+  ): DeleteUserPayload
+
+  """Deletes a single `Userlog` using its globally unique id."""
+  deleteUserlogByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteUserlogByNodeIdInput!
+  ): DeleteUserlogPayload
+
+  """Deletes a single `Userlog` using a unique key."""
+  deleteUserlog(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteUserlogInput!
+  ): DeleteUserlogPayload
+  likeTopic(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: LikeTopicInput!
+  ): LikeTopicPayload
+  markAllCommentAsread(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: MarkAllCommentAsreadInput!
+  ): MarkAllCommentAsreadPayload
+  markAllMentionAsread(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: MarkAllMentionAsreadInput!
+  ): MarkAllMentionAsreadPayload
+  markCommentAsread(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: MarkCommentAsreadInput!
+  ): MarkCommentAsreadPayload
+  markMentionAsread(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: MarkMentionAsreadInput!
+  ): MarkMentionAsreadPayload
+}
+
+"""An object with a globally unique `ID`."""
+interface Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: Cursor
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: Cursor
+}
+
+"""The root query type which gives access points into the data universe."""
+type Query implements Node {
+  """
+  Exposes the root query type nested one level down. This is helpful for Relay 1
+  which can only query top level fields if they are in a particular form.
+  """
+  query: Query!
+
+  """
+  The root query type must be a `Node` to work well with Relay 1 mutations. This just resolves to `query`.
+  """
+  nodeId: ID!
+
+  """Fetches an object given its globally unique `ID`."""
+  node(
+    """The globally unique `ID`."""
+    nodeId: ID!
+  ): Node
+
+  """Reads and enables pagination through a set of `Comment`."""
+  comments(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Comment`."""
+    orderBy: [CommentsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: CommentCondition
+  ): CommentsConnection
+
+  """Reads a set of `Comment`."""
+  commentsList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Comment`."""
+    orderBy: [CommentsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: CommentCondition
+  ): [Comment!]
+
+  """Reads and enables pagination through a set of `Like`."""
+  likes(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Like`."""
+    orderBy: [LikesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: LikeCondition
+  ): LikesConnection
+
+  """Reads a set of `Like`."""
+  likesList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Like`."""
+    orderBy: [LikesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: LikeCondition
+  ): [Like!]
+
+  """Reads and enables pagination through a set of `Mention`."""
+  mentions(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Mention`."""
+    orderBy: [MentionsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: MentionCondition
+  ): MentionsConnection
+
+  """Reads a set of `Mention`."""
+  mentionsList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Mention`."""
+    orderBy: [MentionsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: MentionCondition
+  ): [Mention!]
+
+  """Reads and enables pagination through a set of `Section`."""
+  sections(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Section`."""
+    orderBy: [SectionsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: SectionCondition
+  ): SectionsConnection
+
+  """Reads a set of `Section`."""
+  sectionsList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Section`."""
+    orderBy: [SectionsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: SectionCondition
+  ): [Section!]
+
+  """Reads and enables pagination through a set of `Tag`."""
+  tags(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Tag`."""
+    orderBy: [TagsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: TagCondition
+  ): TagsConnection
+
+  """Reads a set of `Tag`."""
+  tagsList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Tag`."""
+    orderBy: [TagsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: TagCondition
+  ): [Tag!]
+
+  """Reads and enables pagination through a set of `Topic`."""
+  topics(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Topic`."""
+    orderBy: [TopicsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: TopicCondition
+  ): TopicsConnection
+
+  """Reads a set of `Topic`."""
+  topicsList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Topic`."""
+    orderBy: [TopicsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: TopicCondition
+  ): [Topic!]
+
+  """Reads and enables pagination through a set of `TopicTag`."""
+  topicTags(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `TopicTag`."""
+    orderBy: [TopicTagsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: TopicTagCondition
+  ): TopicTagsConnection
+
+  """Reads a set of `TopicTag`."""
+  topicTagsList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `TopicTag`."""
+    orderBy: [TopicTagsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: TopicTagCondition
+  ): [TopicTag!]
+
+  """Reads and enables pagination through a set of `User`."""
+  users(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `User`."""
+    orderBy: [UsersOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: UserCondition
+  ): UsersConnection
+
+  """Reads a set of `User`."""
+  usersList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `User`."""
+    orderBy: [UsersOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: UserCondition
+  ): [User!]
+
+  """Reads and enables pagination through a set of `Userlog`."""
+  userlogs(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Userlog`."""
+    orderBy: [UserlogsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: UserlogCondition
+  ): UserlogsConnection
+
+  """Reads a set of `Userlog`."""
+  userlogsList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Userlog`."""
+    orderBy: [UserlogsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: UserlogCondition
+  ): [Userlog!]
+  comment(id: Int!): Comment
+  like(id: Int!): Like
+  mention(id: Int!): Mention
+  section(id: Int!): Section
+  tag(id: Int!): Tag
+  topic(id: Int!): Topic
+  topicTag(id: Int!): TopicTag
+  user(code: String!): User
+  userlog(id: Int!): Userlog
+
+  """Reads and enables pagination through a set of `Topic`."""
+  getFullTextSearch(
+    keyword: String
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+  ): TopicsConnection!
+
+  """Reads and enables pagination through a set of `Topic`."""
+  getFullTextSearchList(
+    keyword: String
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+  ): [Topic]
+  getHomeStatistics(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+  ): GetHomeStatisticsConnection!
+  getHomeStatisticsList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+  ): [BigInt]
+
+  """Reads and enables pagination through a set of `Comment`."""
+  getTopicReceivedComments(
+    topicid: Int
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+  ): CommentsConnection!
+
+  """Reads and enables pagination through a set of `Comment`."""
+  getTopicReceivedCommentsList(
+    topicid: Int
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+  ): [Comment]
+
+  """Reads and enables pagination through a set of `User`."""
+  getUserByCode(
+    usercode: String
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+  ): UsersConnection!
+
+  """Reads and enables pagination through a set of `User`."""
+  getUserByCodeList(
+    usercode: String
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+  ): [User]
+
+  """Reads and enables pagination through a set of `User`."""
+  getUserByKeyword(
+    keyword: String
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+  ): UsersConnection!
+
+  """Reads and enables pagination through a set of `User`."""
+  getUserByKeywordList(
+    keyword: String
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+  ): [User]
+
+  """Reads and enables pagination through a set of `Comment`."""
+  getUserReceivedComments(
+    usercode: String
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+  ): CommentsConnection!
+
+  """Reads and enables pagination through a set of `Comment`."""
+  getUserReceivedCommentsList(
+    usercode: String
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+  ): [Comment]
+
+  """Reads and enables pagination through a set of `Comment`."""
+  getUserUnreadComments(
+    usercode: String
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+  ): CommentsConnection!
+
+  """Reads and enables pagination through a set of `Comment`."""
+  getUserUnreadCommentsList(
+    usercode: String
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+  ): [Comment]
+  myArrayToString(tags: [String]!): String
+
+  """Reads a single `Comment` using its globally unique `ID`."""
+  commentByNodeId(
+    """The globally unique `ID` to be used in selecting a single `Comment`."""
+    nodeId: ID!
+  ): Comment
+
+  """Reads a single `Like` using its globally unique `ID`."""
+  likeByNodeId(
+    """The globally unique `ID` to be used in selecting a single `Like`."""
+    nodeId: ID!
+  ): Like
+
+  """Reads a single `Mention` using its globally unique `ID`."""
+  mentionByNodeId(
+    """The globally unique `ID` to be used in selecting a single `Mention`."""
+    nodeId: ID!
+  ): Mention
+
+  """Reads a single `Section` using its globally unique `ID`."""
+  sectionByNodeId(
+    """The globally unique `ID` to be used in selecting a single `Section`."""
+    nodeId: ID!
+  ): Section
+
+  """Reads a single `Tag` using its globally unique `ID`."""
+  tagByNodeId(
+    """The globally unique `ID` to be used in selecting a single `Tag`."""
+    nodeId: ID!
+  ): Tag
+
+  """Reads a single `Topic` using its globally unique `ID`."""
+  topicByNodeId(
+    """The globally unique `ID` to be used in selecting a single `Topic`."""
+    nodeId: ID!
+  ): Topic
+
+  """Reads a single `TopicTag` using its globally unique `ID`."""
+  topicTagByNodeId(
+    """The globally unique `ID` to be used in selecting a single `TopicTag`."""
+    nodeId: ID!
+  ): TopicTag
+
+  """Reads a single `User` using its globally unique `ID`."""
+  userByNodeId(
+    """The globally unique `ID` to be used in selecting a single `User`."""
+    nodeId: ID!
+  ): User
+
+  """Reads a single `Userlog` using its globally unique `ID`."""
+  userlogByNodeId(
+    """The globally unique `ID` to be used in selecting a single `Userlog`."""
+    nodeId: ID!
+  ): Userlog
+}
+
+type Section implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+
+  """版块id"""
+  id: Int!
+
+  """版块级别"""
+  level: Int
+
+  """父级版块id"""
+  parent: Int
+
+  """版块名"""
+  name: String!
+
+  """版块排序值"""
+  sort: Int
+
+  """封面图"""
+  avatar: String
+
+  """版块描述"""
+  description: String
+
+  """创建时间"""
+  createdAt: Datetime!
+
+  """更新时间"""
+  updatedAt: Datetime!
+
+  """Reads and enables pagination through a set of `Topic`."""
+  topics(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Topic`."""
+    orderBy: [TopicsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: TopicCondition
+  ): TopicsConnection!
+
+  """Reads and enables pagination through a set of `Topic`."""
+  topicsList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Topic`."""
+    orderBy: [TopicsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: TopicCondition
+  ): [Topic!]!
+}
+
+"""
+A condition to be used against `Section` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input SectionCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+
+  """Checks for equality with the object’s `level` field."""
+  level: Int
+
+  """Checks for equality with the object’s `parent` field."""
+  parent: Int
+
+  """Checks for equality with the object’s `name` field."""
+  name: String
+
+  """Checks for equality with the object’s `sort` field."""
+  sort: Int
+
+  """Checks for equality with the object’s `avatar` field."""
+  avatar: String
+
+  """Checks for equality with the object’s `description` field."""
+  description: String
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `updatedAt` field."""
+  updatedAt: Datetime
+}
+
+"""An input for mutations affecting `Section`"""
+input SectionInput {
+  """版块id"""
+  id: Int
+
+  """版块级别"""
+  level: Int
+
+  """父级版块id"""
+  parent: Int
+
+  """版块名"""
+  name: String!
+
+  """版块排序值"""
+  sort: Int
+
+  """封面图"""
+  avatar: String
+
+  """版块描述"""
+  description: String
+
+  """创建时间"""
+  createdAt: Datetime
+
+  """更新时间"""
+  updatedAt: Datetime
+}
+
+"""
+Represents an update to a `Section`. Fields that are set will be updated.
+"""
+input SectionPatch {
+  """版块id"""
+  id: Int
+
+  """版块级别"""
+  level: Int
+
+  """父级版块id"""
+  parent: Int
+
+  """版块名"""
+  name: String
+
+  """版块排序值"""
+  sort: Int
+
+  """封面图"""
+  avatar: String
+
+  """版块描述"""
+  description: String
+
+  """创建时间"""
+  createdAt: Datetime
+
+  """更新时间"""
+  updatedAt: Datetime
+}
+
+"""A connection to a list of `Section` values."""
+type SectionsConnection {
+  """A list of `Section` objects."""
+  nodes: [Section]!
+
+  """
+  A list of edges which contains the `Section` and cursor to aid in pagination.
+  """
+  edges: [SectionsEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Section` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Section` edge in the connection."""
+type SectionsEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Section` at the end of the edge."""
+  node: Section
+}
+
+"""Methods to use when ordering `Section`."""
+enum SectionsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  LEVEL_ASC
+  LEVEL_DESC
+  PARENT_ASC
+  PARENT_DESC
+  NAME_ASC
+  NAME_DESC
+  SORT_ASC
+  SORT_DESC
+  AVATAR_ASC
+  AVATAR_DESC
+  DESCRIPTION_ASC
+  DESCRIPTION_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+The root subscription type: contains realtime events you can subscribe to with the `subscription` operation.
+"""
+type Subscription {
+  listen(topic: String!): ListenPayload!
+}
+
+type Tag implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+
+  """id"""
+  id: Int!
+
+  """标签名"""
+  name: String
+  createdAt: Datetime!
+  updatedAt: Datetime!
+  deletedAt: Datetime
+
+  """Reads and enables pagination through a set of `TopicTag`."""
+  topicTags(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `TopicTag`."""
+    orderBy: [TopicTagsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: TopicTagCondition
+  ): TopicTagsConnection!
+
+  """Reads and enables pagination through a set of `TopicTag`."""
+  topicTagsList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `TopicTag`."""
+    orderBy: [TopicTagsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: TopicTagCondition
+  ): [TopicTag!]!
+}
+
+"""
+A condition to be used against `Tag` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input TagCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+
+  """Checks for equality with the object’s `name` field."""
+  name: String
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `updatedAt` field."""
+  updatedAt: Datetime
+
+  """Checks for equality with the object’s `deletedAt` field."""
+  deletedAt: Datetime
+}
+
+"""An input for mutations affecting `Tag`"""
+input TagInput {
+  """id"""
+  id: Int
+
+  """标签名"""
+  name: String
+  createdAt: Datetime
+  updatedAt: Datetime
+  deletedAt: Datetime
+}
+
+"""Represents an update to a `Tag`. Fields that are set will be updated."""
+input TagPatch {
+  """id"""
+  id: Int
+
+  """标签名"""
+  name: String
+  createdAt: Datetime
+  updatedAt: Datetime
+  deletedAt: Datetime
+}
+
+"""A connection to a list of `Tag` values."""
+type TagsConnection {
+  """A list of `Tag` objects."""
+  nodes: [Tag]!
+
+  """
+  A list of edges which contains the `Tag` and cursor to aid in pagination.
+  """
+  edges: [TagsEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Tag` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Tag` edge in the connection."""
+type TagsEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Tag` at the end of the edge."""
+  node: Tag
+}
+
+"""Methods to use when ordering `Tag`."""
+enum TagsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  NAME_ASC
+  NAME_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  DELETED_AT_ASC
+  DELETED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+type Topic implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+
+  """帖子id"""
+  id: Int!
+
+  """发帖用户code"""
+  userCode: String
+
+  """所属版块id"""
+  sectionId: Int
+
+  """帖子标题"""
+  title: String
+
+  """帖子内容"""
+  content: String
+
+  """点赞数"""
+  likeNum: BigInt
+
+  """评论数"""
+  commentNum: BigInt
+
+  """帖子类型"""
+  type: Int
+
+  """帖子状态"""
+  status: Int
+
+  """创建时间"""
+  createdAt: Datetime!
+
+  """更新时间"""
+  updatedAt: Datetime!
+
+  """删除时间"""
+  deletedAt: Datetime
+  tags: [String]
+  mentioncodes: [String]
+
+  """Reads a single `User` that is related to this `Topic`."""
+  userByUserCode: User
+
+  """Reads a single `Section` that is related to this `Topic`."""
+  section: Section
+
+  """Reads and enables pagination through a set of `Comment`."""
+  comments(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Comment`."""
+    orderBy: [CommentsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: CommentCondition
+  ): CommentsConnection!
+
+  """Reads and enables pagination through a set of `Comment`."""
+  commentsList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Comment`."""
+    orderBy: [CommentsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: CommentCondition
+  ): [Comment!]!
+
+  """Reads and enables pagination through a set of `TopicTag`."""
+  topicTags(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `TopicTag`."""
+    orderBy: [TopicTagsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: TopicTagCondition
+  ): TopicTagsConnection!
+
+  """Reads and enables pagination through a set of `TopicTag`."""
+  topicTagsList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `TopicTag`."""
+    orderBy: [TopicTagsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: TopicTagCondition
+  ): [TopicTag!]!
+
+  """Reads and enables pagination through a set of `Mention`."""
+  mentions(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Mention`."""
+    orderBy: [MentionsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: MentionCondition
+  ): MentionsConnection!
+
+  """Reads and enables pagination through a set of `Mention`."""
+  mentionsList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Mention`."""
+    orderBy: [MentionsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: MentionCondition
+  ): [Mention!]!
+
+  """Reads and enables pagination through a set of `Like`."""
+  likes(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Like`."""
+    orderBy: [LikesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: LikeCondition
+  ): LikesConnection!
+
+  """Reads and enables pagination through a set of `Like`."""
+  likesList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Like`."""
+    orderBy: [LikesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: LikeCondition
+  ): [Like!]!
+}
+
+"""
+A condition to be used against `Topic` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input TopicCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+
+  """Checks for equality with the object’s `userCode` field."""
+  userCode: String
+
+  """Checks for equality with the object’s `sectionId` field."""
+  sectionId: Int
+
+  """Checks for equality with the object’s `title` field."""
+  title: String
+
+  """Checks for equality with the object’s `content` field."""
+  content: String
+
+  """Checks for equality with the object’s `likeNum` field."""
+  likeNum: BigInt
+
+  """Checks for equality with the object’s `commentNum` field."""
+  commentNum: BigInt
+
+  """Checks for equality with the object’s `type` field."""
+  type: Int
+
+  """Checks for equality with the object’s `status` field."""
+  status: Int
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `updatedAt` field."""
+  updatedAt: Datetime
+
+  """Checks for equality with the object’s `deletedAt` field."""
+  deletedAt: Datetime
+
+  """Checks for equality with the object’s `tags` field."""
+  tags: [String]
+
+  """Checks for equality with the object’s `mentioncodes` field."""
+  mentioncodes: [String]
+}
+
+"""An input for mutations affecting `Topic`"""
+input TopicInput {
+  """帖子id"""
+  id: Int
+
+  """发帖用户code"""
+  userCode: String
+
+  """所属版块id"""
+  sectionId: Int
+
+  """帖子标题"""
+  title: String
+
+  """帖子内容"""
+  content: String
+
+  """点赞数"""
+  likeNum: BigInt
+
+  """评论数"""
+  commentNum: BigInt
+
+  """帖子类型"""
+  type: Int
+
+  """帖子状态"""
+  status: Int
+
+  """创建时间"""
+  createdAt: Datetime
+
+  """更新时间"""
+  updatedAt: Datetime
+
+  """删除时间"""
+  deletedAt: Datetime
+  tags: [String]
+  mentioncodes: [String]
+}
+
+"""
+Represents an update to a `Topic`. Fields that are set will be updated.
+"""
+input TopicPatch {
+  """帖子id"""
+  id: Int
+
+  """发帖用户code"""
+  userCode: String
+
+  """所属版块id"""
+  sectionId: Int
+
+  """帖子标题"""
+  title: String
+
+  """帖子内容"""
+  content: String
+
+  """点赞数"""
+  likeNum: BigInt
+
+  """评论数"""
+  commentNum: BigInt
+
+  """帖子类型"""
+  type: Int
+
+  """帖子状态"""
+  status: Int
+
+  """创建时间"""
+  createdAt: Datetime
+
+  """更新时间"""
+  updatedAt: Datetime
+
+  """删除时间"""
+  deletedAt: Datetime
+  tags: [String]
+  mentioncodes: [String]
+}
+
+"""A connection to a list of `Topic` values."""
+type TopicsConnection {
+  """A list of `Topic` objects."""
+  nodes: [Topic]!
+
+  """
+  A list of edges which contains the `Topic` and cursor to aid in pagination.
+  """
+  edges: [TopicsEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Topic` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Topic` edge in the connection."""
+type TopicsEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Topic` at the end of the edge."""
+  node: Topic
+}
+
+"""Methods to use when ordering `Topic`."""
+enum TopicsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  USER_CODE_ASC
+  USER_CODE_DESC
+  SECTION_ID_ASC
+  SECTION_ID_DESC
+  TITLE_ASC
+  TITLE_DESC
+  CONTENT_ASC
+  CONTENT_DESC
+  LIKE_NUM_ASC
+  LIKE_NUM_DESC
+  COMMENT_NUM_ASC
+  COMMENT_NUM_DESC
+  TYPE_ASC
+  TYPE_DESC
+  STATUS_ASC
+  STATUS_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  DELETED_AT_ASC
+  DELETED_AT_DESC
+  TAGS_ASC
+  TAGS_DESC
+  MENTIONCODES_ASC
+  MENTIONCODES_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+type TopicTag implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+
+  """id"""
+  id: Int!
+
+  """帖子id"""
+  topicId: Int
+
+  """标签id"""
+  tagId: Int
+  createdAt: Datetime!
+  updatedAt: Datetime!
+  deletedAt: Datetime
+
+  """Reads a single `Topic` that is related to this `TopicTag`."""
+  topic: Topic
+
+  """Reads a single `Tag` that is related to this `TopicTag`."""
+  tag: Tag
+}
+
+"""
+A condition to be used against `TopicTag` object types. All fields are tested
+for equality and combined with a logical ‘and.’
+"""
+input TopicTagCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+
+  """Checks for equality with the object’s `topicId` field."""
+  topicId: Int
+
+  """Checks for equality with the object’s `tagId` field."""
+  tagId: Int
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `updatedAt` field."""
+  updatedAt: Datetime
+
+  """Checks for equality with the object’s `deletedAt` field."""
+  deletedAt: Datetime
+}
+
+"""An input for mutations affecting `TopicTag`"""
+input TopicTagInput {
+  """id"""
+  id: Int
+
+  """帖子id"""
+  topicId: Int
+
+  """标签id"""
+  tagId: Int
+  createdAt: Datetime
+  updatedAt: Datetime
+  deletedAt: Datetime
+}
+
+"""
+Represents an update to a `TopicTag`. Fields that are set will be updated.
+"""
+input TopicTagPatch {
+  """id"""
+  id: Int
+
+  """帖子id"""
+  topicId: Int
+
+  """标签id"""
+  tagId: Int
+  createdAt: Datetime
+  updatedAt: Datetime
+  deletedAt: Datetime
+}
+
+"""A connection to a list of `TopicTag` values."""
+type TopicTagsConnection {
+  """A list of `TopicTag` objects."""
+  nodes: [TopicTag]!
+
+  """
+  A list of edges which contains the `TopicTag` and cursor to aid in pagination.
+  """
+  edges: [TopicTagsEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `TopicTag` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `TopicTag` edge in the connection."""
+type TopicTagsEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `TopicTag` at the end of the edge."""
+  node: TopicTag
+}
+
+"""Methods to use when ordering `TopicTag`."""
+enum TopicTagsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  TOPIC_ID_ASC
+  TOPIC_ID_DESC
+  TAG_ID_ASC
+  TAG_ID_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  DELETED_AT_ASC
+  DELETED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""All input for the `updateCommentByNodeId` mutation."""
+input UpdateCommentByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Comment` to be updated.
+  """
+  nodeId: ID!
+
+  """
+  An object where the defined keys will be set on the `Comment` being updated.
+  """
+  patch: CommentPatch!
+}
+
+"""All input for the `updateComment` mutation."""
+input UpdateCommentInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `Comment` being updated.
+  """
+  patch: CommentPatch!
+
+  """回复id"""
+  id: Int!
+}
+
+"""The output of our update `Comment` mutation."""
+type UpdateCommentPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Comment` that was updated by this mutation."""
+  comment: Comment
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Comment`."""
+  userByUserCode: User
+
+  """Reads a single `Topic` that is related to this `Comment`."""
+  topic: Topic
+
+  """An edge for our `Comment`. May be used by Relay 1."""
+  commentEdge(
+    """The method to use when ordering `Comment`."""
+    orderBy: [CommentsOrderBy!] = PRIMARY_KEY_ASC
+  ): CommentsEdge
+}
+
+"""All input for the `updateLikeByNodeId` mutation."""
+input UpdateLikeByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Like` to be updated.
+  """
+  nodeId: ID!
+
+  """
+  An object where the defined keys will be set on the `Like` being updated.
+  """
+  patch: LikePatch!
+}
+
+"""All input for the `updateLike` mutation."""
+input UpdateLikeInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `Like` being updated.
+  """
+  patch: LikePatch!
+
+  """点赞 id"""
+  id: Int!
+}
+
+"""The output of our update `Like` mutation."""
+type UpdateLikePayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Like` that was updated by this mutation."""
+  like: Like
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Like`."""
+  userByUserCode: User
+
+  """Reads a single `Topic` that is related to this `Like`."""
+  topic: Topic
+
+  """An edge for our `Like`. May be used by Relay 1."""
+  likeEdge(
+    """The method to use when ordering `Like`."""
+    orderBy: [LikesOrderBy!] = PRIMARY_KEY_ASC
+  ): LikesEdge
+}
+
+"""All input for the `updateMentionByNodeId` mutation."""
+input UpdateMentionByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Mention` to be updated.
+  """
+  nodeId: ID!
+
+  """
+  An object where the defined keys will be set on the `Mention` being updated.
+  """
+  patch: MentionPatch!
+}
+
+"""All input for the `updateMention` mutation."""
+input UpdateMentionInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `Mention` being updated.
+  """
+  patch: MentionPatch!
+
+  """mention id"""
+  id: Int!
+}
+
+"""The output of our update `Mention` mutation."""
+type UpdateMentionPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Mention` that was updated by this mutation."""
+  mention: Mention
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Mention`."""
+  userByUserCode: User
+
+  """Reads a single `Topic` that is related to this `Mention`."""
+  topic: Topic
+
+  """An edge for our `Mention`. May be used by Relay 1."""
+  mentionEdge(
+    """The method to use when ordering `Mention`."""
+    orderBy: [MentionsOrderBy!] = PRIMARY_KEY_ASC
+  ): MentionsEdge
+}
+
+"""All input for the `updateSectionByNodeId` mutation."""
+input UpdateSectionByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Section` to be updated.
+  """
+  nodeId: ID!
+
+  """
+  An object where the defined keys will be set on the `Section` being updated.
+  """
+  patch: SectionPatch!
+}
+
+"""All input for the `updateSection` mutation."""
+input UpdateSectionInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `Section` being updated.
+  """
+  patch: SectionPatch!
+
+  """版块id"""
+  id: Int!
+}
+
+"""The output of our update `Section` mutation."""
+type UpdateSectionPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Section` that was updated by this mutation."""
+  section: Section
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Section`. May be used by Relay 1."""
+  sectionEdge(
+    """The method to use when ordering `Section`."""
+    orderBy: [SectionsOrderBy!] = PRIMARY_KEY_ASC
+  ): SectionsEdge
+}
+
+"""All input for the `updateTagByNodeId` mutation."""
+input UpdateTagByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Tag` to be updated.
+  """
+  nodeId: ID!
+
+  """
+  An object where the defined keys will be set on the `Tag` being updated.
+  """
+  patch: TagPatch!
+}
+
+"""All input for the `updateTag` mutation."""
+input UpdateTagInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `Tag` being updated.
+  """
+  patch: TagPatch!
+
+  """id"""
+  id: Int!
+}
+
+"""The output of our update `Tag` mutation."""
+type UpdateTagPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Tag` that was updated by this mutation."""
+  tag: Tag
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Tag`. May be used by Relay 1."""
+  tagEdge(
+    """The method to use when ordering `Tag`."""
+    orderBy: [TagsOrderBy!] = PRIMARY_KEY_ASC
+  ): TagsEdge
+}
+
+"""All input for the `updateTopicByNodeId` mutation."""
+input UpdateTopicByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Topic` to be updated.
+  """
+  nodeId: ID!
+
+  """
+  An object where the defined keys will be set on the `Topic` being updated.
+  """
+  patch: TopicPatch!
+}
+
+"""All input for the `updateTopic` mutation."""
+input UpdateTopicInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `Topic` being updated.
+  """
+  patch: TopicPatch!
+
+  """帖子id"""
+  id: Int!
+}
+
+"""The output of our update `Topic` mutation."""
+type UpdateTopicPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Topic` that was updated by this mutation."""
+  topic: Topic
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Topic`."""
+  userByUserCode: User
+
+  """Reads a single `Section` that is related to this `Topic`."""
+  section: Section
+
+  """An edge for our `Topic`. May be used by Relay 1."""
+  topicEdge(
+    """The method to use when ordering `Topic`."""
+    orderBy: [TopicsOrderBy!] = PRIMARY_KEY_ASC
+  ): TopicsEdge
+}
+
+"""All input for the `updateTopicTagByNodeId` mutation."""
+input UpdateTopicTagByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `TopicTag` to be updated.
+  """
+  nodeId: ID!
+
+  """
+  An object where the defined keys will be set on the `TopicTag` being updated.
+  """
+  patch: TopicTagPatch!
+}
+
+"""All input for the `updateTopicTag` mutation."""
+input UpdateTopicTagInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `TopicTag` being updated.
+  """
+  patch: TopicTagPatch!
+
+  """id"""
+  id: Int!
+}
+
+"""The output of our update `TopicTag` mutation."""
+type UpdateTopicTagPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `TopicTag` that was updated by this mutation."""
+  topicTag: TopicTag
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `Topic` that is related to this `TopicTag`."""
+  topic: Topic
+
+  """Reads a single `Tag` that is related to this `TopicTag`."""
+  tag: Tag
+
+  """An edge for our `TopicTag`. May be used by Relay 1."""
+  topicTagEdge(
+    """The method to use when ordering `TopicTag`."""
+    orderBy: [TopicTagsOrderBy!] = PRIMARY_KEY_ASC
+  ): TopicTagsEdge
+}
+
+"""All input for the `updateUserByNodeId` mutation."""
+input UpdateUserByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `User` to be updated.
+  """
+  nodeId: ID!
+
+  """
+  An object where the defined keys will be set on the `User` being updated.
+  """
+  patch: UserPatch!
+}
+
+"""All input for the `updateUser` mutation."""
+input UpdateUserInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `User` being updated.
+  """
+  patch: UserPatch!
+
+  """员工号"""
+  code: String!
+}
+
+"""All input for the `updateUserlogByNodeId` mutation."""
+input UpdateUserlogByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Userlog` to be updated.
+  """
+  nodeId: ID!
+
+  """
+  An object where the defined keys will be set on the `Userlog` being updated.
+  """
+  patch: UserlogPatch!
+}
+
+"""All input for the `updateUserlog` mutation."""
+input UpdateUserlogInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `Userlog` being updated.
+  """
+  patch: UserlogPatch!
+  id: Int!
+}
+
+"""The output of our update `Userlog` mutation."""
+type UpdateUserlogPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Userlog` that was updated by this mutation."""
+  userlog: Userlog
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Userlog`."""
+  userByUserCode: User
+
+  """An edge for our `Userlog`. May be used by Relay 1."""
+  userlogEdge(
+    """The method to use when ordering `Userlog`."""
+    orderBy: [UserlogsOrderBy!] = PRIMARY_KEY_ASC
+  ): UserlogsEdge
+}
+
+"""The output of our update `User` mutation."""
+type UpdateUserPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `User` that was updated by this mutation."""
+  user: User
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `User`. May be used by Relay 1."""
+  userEdge(
+    """The method to use when ordering `User`."""
+    orderBy: [UsersOrderBy!] = PRIMARY_KEY_ASC
+  ): UsersEdge
+}
+
+type User implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+
+  """用户id"""
+  id: Int!
+
+  """用户名"""
+  name: String!
+
+  """员工号"""
+  code: String!
+
+  """性别: 1 男 2 女"""
+  sex: Int
+
+  """年龄"""
+  age: Int
+
+  """生日"""
+  birthday: Date
+
+  """头像"""
+  avatar: String
+
+  """昵称"""
+  nickname: String
+
+  """关于我"""
+  about: String
+
+  """签名"""
+  signature: String
+
+  """帖子数"""
+  topicNum: BigInt
+
+  """回复数"""
+  commentNum: BigInt
+
+  """点赞数"""
+  likeNum: BigInt
+
+  """获得点赞数"""
+  receivedLikeNum: BigInt
+
+  """获得回复数"""
+  receivedCommentNum: BigInt
+
+  """是否在线"""
+  isonline: Boolean
+
+  """最后在线ip"""
+  lastOnlineIp: String
+
+  """最后在线时间"""
+  lastOnlineTime: Datetime
+
+  """创建时间"""
+  createdAt: Datetime!
+
+  """更新时间"""
+  updatedAt: Datetime!
+
+  """未读评论数"""
+  unreadCommentNum: BigInt
+
+  """未读@数"""
+  unreadMentionNum: BigInt
+
+  """获得评论数"""
+  receivedMentionNum: BigInt
+
+  """Reads and enables pagination through a set of `Comment`."""
+  commentsByUserCode(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Comment`."""
+    orderBy: [CommentsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: CommentCondition
+  ): CommentsConnection!
+
+  """Reads and enables pagination through a set of `Comment`."""
+  commentsByUserCodeList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Comment`."""
+    orderBy: [CommentsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: CommentCondition
+  ): [Comment!]!
+
+  """Reads and enables pagination through a set of `Topic`."""
+  topicsByUserCode(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Topic`."""
+    orderBy: [TopicsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: TopicCondition
+  ): TopicsConnection!
+
+  """Reads and enables pagination through a set of `Topic`."""
+  topicsByUserCodeList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Topic`."""
+    orderBy: [TopicsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: TopicCondition
+  ): [Topic!]!
+
+  """Reads and enables pagination through a set of `Userlog`."""
+  userlogsByUserCode(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Userlog`."""
+    orderBy: [UserlogsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: UserlogCondition
+  ): UserlogsConnection!
+
+  """Reads and enables pagination through a set of `Userlog`."""
+  userlogsByUserCodeList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Userlog`."""
+    orderBy: [UserlogsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: UserlogCondition
+  ): [Userlog!]!
+
+  """Reads and enables pagination through a set of `Mention`."""
+  mentionsByUserCode(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Mention`."""
+    orderBy: [MentionsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: MentionCondition
+  ): MentionsConnection!
+
+  """Reads and enables pagination through a set of `Mention`."""
+  mentionsByUserCodeList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Mention`."""
+    orderBy: [MentionsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: MentionCondition
+  ): [Mention!]!
+
+  """Reads and enables pagination through a set of `Like`."""
+  likesByUserCode(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Like`."""
+    orderBy: [LikesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: LikeCondition
+  ): LikesConnection!
+
+  """Reads and enables pagination through a set of `Like`."""
+  likesByUserCodeList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Like`."""
+    orderBy: [LikesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: LikeCondition
+  ): [Like!]!
+}
+
+"""
+A condition to be used against `User` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input UserCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+
+  """Checks for equality with the object’s `name` field."""
+  name: String
+
+  """Checks for equality with the object’s `code` field."""
+  code: String
+
+  """Checks for equality with the object’s `sex` field."""
+  sex: Int
+
+  """Checks for equality with the object’s `age` field."""
+  age: Int
+
+  """Checks for equality with the object’s `birthday` field."""
+  birthday: Date
+
+  """Checks for equality with the object’s `avatar` field."""
+  avatar: String
+
+  """Checks for equality with the object’s `nickname` field."""
+  nickname: String
+
+  """Checks for equality with the object’s `about` field."""
+  about: String
+
+  """Checks for equality with the object’s `signature` field."""
+  signature: String
+
+  """Checks for equality with the object’s `topicNum` field."""
+  topicNum: BigInt
+
+  """Checks for equality with the object’s `commentNum` field."""
+  commentNum: BigInt
+
+  """Checks for equality with the object’s `likeNum` field."""
+  likeNum: BigInt
+
+  """Checks for equality with the object’s `receivedLikeNum` field."""
+  receivedLikeNum: BigInt
+
+  """Checks for equality with the object’s `receivedCommentNum` field."""
+  receivedCommentNum: BigInt
+
+  """Checks for equality with the object’s `isonline` field."""
+  isonline: Boolean
+
+  """Checks for equality with the object’s `lastOnlineIp` field."""
+  lastOnlineIp: String
+
+  """Checks for equality with the object’s `lastOnlineTime` field."""
+  lastOnlineTime: Datetime
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `updatedAt` field."""
+  updatedAt: Datetime
+
+  """Checks for equality with the object’s `unreadCommentNum` field."""
+  unreadCommentNum: BigInt
+
+  """Checks for equality with the object’s `unreadMentionNum` field."""
+  unreadMentionNum: BigInt
+
+  """Checks for equality with the object’s `receivedMentionNum` field."""
+  receivedMentionNum: BigInt
+}
+
+"""An input for mutations affecting `User`"""
+input UserInput {
+  """用户id"""
+  id: Int
+
+  """用户名"""
+  name: String!
+
+  """员工号"""
+  code: String!
+
+  """性别: 1 男 2 女"""
+  sex: Int
+
+  """年龄"""
+  age: Int
+
+  """生日"""
+  birthday: Date
+
+  """头像"""
+  avatar: String
+
+  """昵称"""
+  nickname: String
+
+  """关于我"""
+  about: String
+
+  """签名"""
+  signature: String
+
+  """帖子数"""
+  topicNum: BigInt
+
+  """回复数"""
+  commentNum: BigInt
+
+  """点赞数"""
+  likeNum: BigInt
+
+  """获得点赞数"""
+  receivedLikeNum: BigInt
+
+  """获得回复数"""
+  receivedCommentNum: BigInt
+
+  """是否在线"""
+  isonline: Boolean
+
+  """最后在线ip"""
+  lastOnlineIp: String
+
+  """最后在线时间"""
+  lastOnlineTime: Datetime
+
+  """创建时间"""
+  createdAt: Datetime
+
+  """更新时间"""
+  updatedAt: Datetime
+
+  """未读评论数"""
+  unreadCommentNum: BigInt
+
+  """未读@数"""
+  unreadMentionNum: BigInt
+
+  """获得评论数"""
+  receivedMentionNum: BigInt
+}
+
+type Userlog implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+  id: Int!
+
+  """用户code"""
+  userCode: String!
+
+  """用户活动ip"""
+  actionIp: String
+
+  """用户活动类型，如：login logout"""
+  actionType: String
+
+  """用户活动内容"""
+  actionContent: String
+
+  """创建时间"""
+  createdAt: Datetime!
+
+  """Reads a single `User` that is related to this `Userlog`."""
+  userByUserCode: User
+}
+
+"""
+A condition to be used against `Userlog` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input UserlogCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+
+  """Checks for equality with the object’s `userCode` field."""
+  userCode: String
+
+  """Checks for equality with the object’s `actionIp` field."""
+  actionIp: String
+
+  """Checks for equality with the object’s `actionType` field."""
+  actionType: String
+
+  """Checks for equality with the object’s `actionContent` field."""
+  actionContent: String
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+}
+
+"""An input for mutations affecting `Userlog`"""
+input UserlogInput {
+  id: Int
+
+  """用户code"""
+  userCode: String!
+
+  """用户活动ip"""
+  actionIp: String
+
+  """用户活动类型，如：login logout"""
+  actionType: String
+
+  """用户活动内容"""
+  actionContent: String
+
+  """创建时间"""
+  createdAt: Datetime
+}
+
+"""
+Represents an update to a `Userlog`. Fields that are set will be updated.
+"""
+input UserlogPatch {
+  id: Int
+
+  """用户code"""
+  userCode: String
+
+  """用户活动ip"""
+  actionIp: String
+
+  """用户活动类型，如：login logout"""
+  actionType: String
+
+  """用户活动内容"""
+  actionContent: String
+
+  """创建时间"""
+  createdAt: Datetime
+}
+
+"""A connection to a list of `Userlog` values."""
+type UserlogsConnection {
+  """A list of `Userlog` objects."""
+  nodes: [Userlog]!
+
+  """
+  A list of edges which contains the `Userlog` and cursor to aid in pagination.
+  """
+  edges: [UserlogsEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Userlog` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Userlog` edge in the connection."""
+type UserlogsEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Userlog` at the end of the edge."""
+  node: Userlog
+}
+
+"""Methods to use when ordering `Userlog`."""
+enum UserlogsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  USER_CODE_ASC
+  USER_CODE_DESC
+  ACTION_IP_ASC
+  ACTION_IP_DESC
+  ACTION_TYPE_ASC
+  ACTION_TYPE_DESC
+  ACTION_CONTENT_ASC
+  ACTION_CONTENT_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""Represents an update to a `User`. Fields that are set will be updated."""
+input UserPatch {
+  """用户id"""
+  id: Int
+
+  """用户名"""
+  name: String
+
+  """员工号"""
+  code: String
+
+  """性别: 1 男 2 女"""
+  sex: Int
+
+  """年龄"""
+  age: Int
+
+  """生日"""
+  birthday: Date
+
+  """头像"""
+  avatar: String
+
+  """昵称"""
+  nickname: String
+
+  """关于我"""
+  about: String
+
+  """签名"""
+  signature: String
+
+  """帖子数"""
+  topicNum: BigInt
+
+  """回复数"""
+  commentNum: BigInt
+
+  """点赞数"""
+  likeNum: BigInt
+
+  """获得点赞数"""
+  receivedLikeNum: BigInt
+
+  """获得回复数"""
+  receivedCommentNum: BigInt
+
+  """是否在线"""
+  isonline: Boolean
+
+  """最后在线ip"""
+  lastOnlineIp: String
+
+  """最后在线时间"""
+  lastOnlineTime: Datetime
+
+  """创建时间"""
+  createdAt: Datetime
+
+  """更新时间"""
+  updatedAt: Datetime
+
+  """未读评论数"""
+  unreadCommentNum: BigInt
+
+  """未读@数"""
+  unreadMentionNum: BigInt
+
+  """获得评论数"""
+  receivedMentionNum: BigInt
+}
+
+"""A connection to a list of `User` values."""
+type UsersConnection {
+  """A list of `User` objects."""
+  nodes: [User]!
+
+  """
+  A list of edges which contains the `User` and cursor to aid in pagination.
+  """
+  edges: [UsersEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `User` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `User` edge in the connection."""
+type UsersEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `User` at the end of the edge."""
+  node: User
+}
+
+"""Methods to use when ordering `User`."""
+enum UsersOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  NAME_ASC
+  NAME_DESC
+  CODE_ASC
+  CODE_DESC
+  SEX_ASC
+  SEX_DESC
+  AGE_ASC
+  AGE_DESC
+  BIRTHDAY_ASC
+  BIRTHDAY_DESC
+  AVATAR_ASC
+  AVATAR_DESC
+  NICKNAME_ASC
+  NICKNAME_DESC
+  ABOUT_ASC
+  ABOUT_DESC
+  SIGNATURE_ASC
+  SIGNATURE_DESC
+  TOPIC_NUM_ASC
+  TOPIC_NUM_DESC
+  COMMENT_NUM_ASC
+  COMMENT_NUM_DESC
+  LIKE_NUM_ASC
+  LIKE_NUM_DESC
+  RECEIVED_LIKE_NUM_ASC
+  RECEIVED_LIKE_NUM_DESC
+  RECEIVED_COMMENT_NUM_ASC
+  RECEIVED_COMMENT_NUM_DESC
+  ISONLINE_ASC
+  ISONLINE_DESC
+  LAST_ONLINE_IP_ASC
+  LAST_ONLINE_IP_DESC
+  LAST_ONLINE_TIME_ASC
+  LAST_ONLINE_TIME_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  UNREAD_COMMENT_NUM_ASC
+  UNREAD_COMMENT_NUM_DESC
+  UNREAD_MENTION_NUM_ASC
+  UNREAD_MENTION_NUM_DESC
+  RECEIVED_MENTION_NUM_ASC
+  RECEIVED_MENTION_NUM_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}

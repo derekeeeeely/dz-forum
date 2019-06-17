@@ -1,0 +1,71 @@
+.regneva-home{
+  display: flex;
+  &.phone{
+    flex-direction: column-reverse;
+  }
+  .home-statistic{
+    padding: 10px 24px;
+    margin-bottom: 10px;
+    background: #fff;
+    text-align: center;
+  }
+  .regneva-home-left{
+    max-width: 100%;
+    .section-card-parent {
+      margin-bottom: 20px;
+      :global .ant-card-body{
+        display: flex;
+        flex-wrap: wrap;
+        .ant-card.ant-card-bordered{
+          width: 300px;
+          margin: 20px 40px;
+        }
+      }
+      .section-card-des{
+        font-size: 12px;
+        margin-left: 20px;
+        font-weight: normal;
+      }
+    }
+  }
+  .regneva-home-right{
+    height: fit-content;
+    @media (min-width: 900px) {
+      min-width: 30%;
+      margin-left: 20px;
+    }
+    .search-result {
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #fff;
+      .ant-list.ant-list-split {
+        max-height: 400px;
+        overflow-y: scroll;
+      }
+    }
+    .hot-card-parent{
+      margin: 20px 0;
+      background: #fff;
+      :global .ant-card-body{
+        display: flex;
+        .hot-topics{
+          flex: 1;
+        }
+        .hot-title{
+          font-size: 20px;
+          font-weight: 500;
+          padding-bottom: 10px;
+        }
+      }
+      .ant-list.ant-list-split {
+        max-height: 400px;
+        overflow-y: scroll;
+      }
+    }
+    .search-empty{
+      padding: 20px 0;
+    }
+  }
+}
+
+
